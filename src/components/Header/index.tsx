@@ -10,9 +10,9 @@ export const Header: React.FC = () => {
     <header className={S_Header.background}>
       <Container size={"xl"}>
         <Box component="div" className={S_Header.semiCirculo}>
-          <div className={S_Header.logo}>
+          <Box component="a" className={S_Header.logo} href="/">
             <img src={LogoMarca} alt="Logo da Lets Eat" />
-          </div>
+          </Box>
         </Box>
       </Container>
     </header>

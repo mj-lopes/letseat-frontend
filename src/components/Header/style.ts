@@ -7,6 +7,8 @@ const useStyles = createStyles((theme, params, getRef) => {
     background: {
       height: "80px",
       backgroundColor: CORBG,
+      position: "absolute",
+      width: "100%",
     },
     semiCirculo: {
       position: "relative",

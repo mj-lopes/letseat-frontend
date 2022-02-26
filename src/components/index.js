@@ -1,3 +1,4 @@
-import Header from "./Header";
+import { Header } from "./Header";
+import { Titulo } from "./Titulo";
 
-export { Header };
+export { Header, Titulo };

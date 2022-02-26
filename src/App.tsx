@@ -1,12 +1,13 @@
 import * as React from "react";
-import { Text } from "@mantine/core";
 import { Header } from "./components/Header";
+import { Home } from "./pages/home/Home";
 
-const App: React.FC = () => {
+const App = () => {
   return (
-    <div>
+    <>
       <Header />
-    </div>
+      <Home />
+    </>
   );
 };
 
