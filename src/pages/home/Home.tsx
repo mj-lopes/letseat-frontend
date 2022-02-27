@@ -1,5 +1,5 @@
 import { Container, Grid, Space, Text, Box } from "@mantine/core";
-import { Titulo, HL, Footer } from "../../components";
+import { Titulo, HL, Footer, Aspas } from "../../components";
 import { useStyles } from "./style";
 import bgPesquise from "../../assets/BGPesquisa.png";
 import FormPesquise from "../../assets/FormPesquisa.png";
@@ -101,14 +101,24 @@ export const Home = () => {
       </Container>
       <div
         style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           background: `url(${QuoteBG})`,
           height: "500px",
           backgroundPosition: "center",
           backgroundSize: "cover",
+          padding: "0 1rem",
         }}
-      ></div>
-
-      <Footer />
+      >
+        <Aspas />
+        <Titulo
+          texto="There is no love sincerer than the love of food."
+          align="center"
+          sombra
+          order={3}
+        />
+      </div>
     </>
   );
 };
