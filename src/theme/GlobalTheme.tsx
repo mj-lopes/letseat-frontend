@@ -9,7 +9,7 @@ const GlobalStyle = () => (
         boxSizing: "border-box",
       },
       body: {
-        background: "teal",
+        background: "#FFFAF3",
       },
       img: {
         maxWidth: "100%",

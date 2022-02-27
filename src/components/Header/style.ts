@@ -5,9 +5,10 @@ const CORBG = "rgba(0, 43, 66, 0.8)";
 const useStyles = createStyles((theme, params, getRef) => {
   return {
     background: {
+      zIndex: 1000,
       height: "80px",
       backgroundColor: CORBG,
-      position: "absolute",
+      position: "fixed",
       width: "100%",
     },
     semiCirculo: {

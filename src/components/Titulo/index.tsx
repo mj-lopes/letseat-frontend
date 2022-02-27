@@ -1,13 +1,21 @@
-import { Title } from "@mantine/core";
+import { Title, TitleProps } from "@mantine/core";
+import { useStyles } from "./style";
 
-export const Titulo = ({ texto }: { texto: string }) => (
-  <Title
-    align="center"
-    sx={{
-      color: "#003049",
-      fontSize: "clamp(1rem, 1rem + 6vw, 4.5rem)",
-    }}
-  >
-    {texto}
-  </Title>
-);
+interface ITitulo extends TitleProps {
+  texto: string;
+  decoracaoLatel?: boolean;
+}
+
+export const Titulo = ({
+  texto,
+  decoracaoLatel = false,
+  ...props
+}: ITitulo) => {
+  const { classes } = useStyles({ decoracaoLatel });
+
+  return (
+    <Title className={classes.titulo} {...props}>
+      {texto}
+    </Title>
+  );
+};

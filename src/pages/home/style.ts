@@ -1,5 +1,5 @@
 import { createStyles } from "@mantine/core";
-import homeBG from "../assets/homeHeaderBG.png";
+import homeBG from "../../assets/homeHeaderBG.png";
 
 export const useStyles = createStyles(() => {
   return {
