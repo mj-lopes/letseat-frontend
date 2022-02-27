@@ -1,5 +1,5 @@
 import { Container, Grid, Space, Text, Box } from "@mantine/core";
-import { Titulo, HL } from "../../components";
+import { Titulo, HL, Footer } from "../../components";
 import { useStyles } from "./style";
 import bgPesquise from "../../assets/BGPesquisa.png";
 import FormPesquise from "../../assets/FormPesquisa.png";
@@ -107,6 +107,8 @@ export const Home = () => {
           backgroundSize: "cover",
         }}
       ></div>
+
+      <Footer />
     </>
   );
 };

@@ -1,9 +1,8 @@
 import { Box, Container } from "@mantine/core";
-import * as React from "react";
 import { useStyles } from "./style";
 import LogoMarca from "../../assets/logomarca.svg";
 
-export const Header: React.FC = () => {
+export const Header = () => {
   const { classes: S_Header } = useStyles();
 
   return (
