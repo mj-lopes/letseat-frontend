@@ -11,12 +11,15 @@ import {
 } from "@mantine/core";
 import { InputSearch } from "../../../components";
 import { useStyles } from "./style";
+import { pegarTodasReceitas } from "../../../api";
+import { useNavigate } from "react-router-dom";
 
 export const Pesquisa = () => {
   const [value, setValue] = useState("receita");
   const [pesquisa, setPesquisa] = useState("");
   const [ingredientes, setIngredientes] = useState<string[]>([]);
   const { classes } = useStyles();
+  const navigator = useNavigate();
 
   const handlerRemoveIngrediente: MouseEventHandler<HTMLDivElement> = (el) => {
     const ingrediente = el.currentTarget.innerText.toLocaleLowerCase();
@@ -47,8 +50,13 @@ export const Pesquisa = () => {
       </RadioGroup>
 
       <form
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
+          navigator("/receitas");
+          const { url, options } = pegarTodasReceitas();
+          const resp = await fetch(url, options).then((r) => r.json());
+
+          console.log(resp);
         }}
       >
         <Box className={classes.barraDePesquisa}>
