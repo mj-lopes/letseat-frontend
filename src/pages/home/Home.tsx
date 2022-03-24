@@ -6,6 +6,7 @@ import FormPesquise from "../../assets/FormPesquisa.png";
 import Search from "../../assets/SearchNavegue.png";
 import Receita from "../../assets/Receita.png";
 import QuoteBG from "../../assets/QuoteBG.png";
+import { Pesquisa } from "./Pesquisa";
 
 export const Home = () => {
   const { classes } = useStyles();
@@ -14,18 +15,11 @@ export const Home = () => {
     <>
       <div className={classes.imgBG}>
         <Container className={classes.tituloWrapper} size={"xl"}>
-          <Titulo texto="O que Vamos Comer Hoje?" align="center" />
-          <Space my={"32px"} />
-          <div
-            style={{
-              width: "100%",
-              height: "260px",
-              backgroundColor: "tomato",
-            }}
-          />
+          <Titulo texto="O que Vamos Comer Hoje?" align="center" mb={"md"} />
+          <Pesquisa />
         </Container>
       </div>
-      <Space mt={"11rem"} />
+      <Space mt={"12rem"} />
 
       <Container size={"xl"}>
         <Titulo order={2} texto="Como Funciona" align="center" decoracaoLatel />
