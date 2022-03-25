@@ -1,47 +1,57 @@
 import { MouseEventHandler, useState } from "react";
-import {
-  RadioGroup,
-  Radio,
-  Text,
-  Button,
-  Box,
-  Space,
-  Badge,
-  Group,
-} from "@mantine/core";
+import { RadioGroup, Radio, Text, Button, Box, Badge } from "@mantine/core";
 import { InputSearch } from "../../../components";
 import { useStyles } from "./style";
 import { pegarTodasReceitas } from "../../../api";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { GlobalContext } from "../../../contextApi";
 
 export const Pesquisa = () => {
-  const [value, setValue] = useState("receita");
+  const [tipoPesquisa, setTipoPesquisa] = useState<"receita" | "ingredientes">(
+    "receita",
+  );
   const [pesquisa, setPesquisa] = useState("");
-  const [ingredientes, setIngredientes] = useState<string[]>([]);
   const { classes } = useStyles();
   const navigator = useNavigate();
+  const global = useContext(GlobalContext);
 
   const handlerRemoveIngrediente: MouseEventHandler<HTMLDivElement> = (el) => {
     const ingrediente = el.currentTarget.innerText.toLocaleLowerCase();
-    const newArrIngredientes = ingredientes.filter((el) => el !== ingrediente);
+    const newArrIngredientes =
+      global?.listaIngredientes.filter((el) => el !== ingrediente) || [];
 
-    setIngredientes(newArrIngredientes);
+    global?.setListaIngredientes(newArrIngredientes);
   };
 
   const handlerAdicionaIngrediente = () => {
-    if (!ingredientes.includes(pesquisa)) {
-      const pesquisaValue = pesquisa.toLocaleLowerCase().trim();
-      setIngredientes([...ingredientes, pesquisaValue]);
+    if (!global?.listaIngredientes.includes(pesquisa)) {
+      const novoIngrediente = pesquisa.toLocaleLowerCase().trim();
+      global?.setListaIngredientes((prevValue) => [
+        ...prevValue,
+        novoIngrediente,
+      ]);
     }
+
     setPesquisa("");
+  };
+
+  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+
+    if (tipoPesquisa === "ingredientes") {
+      navigator("/ingredientes");
+    } else {
+      navigator(`/${pesquisa}`);
+    }
   };
 
   return (
     <Box className={classes.containerPesquisa}>
       <RadioGroup
         label={<Text weight="bold">Pesquisar por:</Text>}
-        value={value}
-        onChange={(e) => setValue(e)}
+        value={tipoPesquisa}
+        onChange={(e: "receita" | "ingredientes") => setTipoPesquisa(e)}
         color={"vermelho"}
         mb="md"
       >
@@ -49,16 +59,7 @@ export const Pesquisa = () => {
         <Radio value="ingredientes">Ingredientes</Radio>
       </RadioGroup>
 
-      <form
-        onSubmit={async (e) => {
-          e.preventDefault();
-          navigator("/receitas");
-          const { url, options } = pegarTodasReceitas();
-          const resp = await fetch(url, options).then((r) => r.json());
-
-          console.log(resp);
-        }}
-      >
+      <form onSubmit={handleFormSubmit}>
         <Box className={classes.barraDePesquisa}>
           <InputSearch
             label="Pesquisa"
@@ -67,7 +68,7 @@ export const Pesquisa = () => {
             value={pesquisa}
             sx={{ flex: "1" }}
           />
-          {value === "ingredientes" ? (
+          {tipoPesquisa === "ingredientes" ? (
             <Button
               color={"vermelho"}
               uppercase
@@ -84,9 +85,9 @@ export const Pesquisa = () => {
         </Box>
       </form>
 
-      {value === "ingredientes" ? (
+      {tipoPesquisa === "ingredientes" ? (
         <Box className={classes.containerBadgers} mt="lg">
-          {ingredientes.map((el) => (
+          {global?.listaIngredientes.map((el) => (
             <Badge
               color={"vermelho"}
               onClick={handlerRemoveIngrediente}
