@@ -10,7 +10,6 @@ import { Pesquisa } from "./Pesquisa";
 
 export const Home = () => {
   const { classes } = useStyles();
-
   return (
     <>
       <div className={classes.imgBG}>

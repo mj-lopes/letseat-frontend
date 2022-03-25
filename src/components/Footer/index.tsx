@@ -5,65 +5,43 @@ import FB from "../../assets/facebook.svg";
 import IG from "../../assets/instagram.svg";
 import Twitter from "../../assets/twitter.svg";
 import logobg from "../../assets/logo-bg.svg";
+import { useStyle } from "./style";
 
 export const Footer = () => {
+  const { classes } = useStyle();
+
   return (
-    <footer
-      style={{ background: "#B71000", position: "relative", zIndex: "-10" }}
-    >
-      <img
-        src={logobg}
-        style={{
-          position: "absolute",
-          bottom: "1rem",
-          left: "1rem",
-          zIndex: "-1",
-        }}
-      />
+    <footer className={classes.footerContainer}>
+      <img src={logobg} className={classes.footerBGImg} />
+
       <Container size={"xl"}>
-        <Box sx={{ padding: "1rem 0" }} />
-        <Box sx={{ display: "flex", justifyContent: "center", gap: "2rem" }}>
+        <Space sx={{ paddingTop: "2rem" }} />
+
+        <Box className={classes.redeSociais}>
           <img src={Whats} />
           <img src={FB} />
           <img src={IG} />
           <img src={Twitter} />
         </Box>
-        <Box sx={{ padding: "1rem 0 " }} />
 
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "1rem",
-            padding: "1rem 0",
-          }}
-        >
+        <Space my={"md"} />
+
+        <Box className={classes.contatoContainer}>
           <Text color={"white"}>
             Rua Casa Caiu, 487, bairro Fisico, São Carlos, SP{" "}
           </Text>
-          <span
-            style={{
-              width: "32px",
-              height: "3px",
-              background: "#820B00",
-              display: "inline-block",
-            }}
-          />
+
+          <span className={classes.contatoSeparador} />
+
           <Text color={"white"}>letseatSPBR@hotmail.com </Text>
-          <span
-            style={{
-              width: "32px",
-              height: "3px",
-              background: "#820B00",
-              display: "inline-block",
-            }}
-          />
+
+          <span className={classes.contatoSeparador} />
+
           <Text color={"white"}>(99) 99999 9999</Text>
         </Box>
 
-        <Box sx={{ maxWidth: "480px", padding: "2rem 0", margin: "auto" }}>
-          <Text color={"white"} align="center">
+        <Box className={classes.footerCopyright}>
+          <Text color={"white"} align="center" size="sm">
             Criado por: Marcos Júnior - Somente para fins pessoais Todas as
             imagens são de direito de seus respectivos autores
           </Text>
