@@ -37,14 +37,15 @@ export const Home = () => {
         <Grid>
           <Grid.Col md={5} xs={12}>
             <Box sx={{ position: "relative" }}>
-              <img src={bgPesquise} alt="" />
-              <img
+              <Image src={bgPesquise} alt="" height={"300px"} />
+              <Image
                 src={FormPesquise}
-                style={{
+                sx={{
                   position: "absolute",
-                  bottom: "10%",
+                  bottom: "-2.5%",
                   left: "15%",
-                  boxShadow: "1px 3px 10px 0 #8c8c8c",
+                  right: "5%",
+                  filter: "drop-shadow(1px 3px 3px #8c8c8c)",
                 }}
               />
             </Box>
@@ -76,14 +77,14 @@ export const Home = () => {
             <Grid>
               <Grid.Col md={7} xs={12}>
                 <Titulo texto="Navegue" cor="branco" />
-                <Text color={"#3B2803"} size="lg" my={"md"}>
+                <Text color="white" size="lg" my={"md"}>
                   Escolha a sua próxima refeição através da nossa lista de{" "}
-                  <HL>+5 mil</HL> receitas. Massas, carnes, lanches...{" "}
-                  <HL>Você escolhe!</HL>
+                  <HL corBG="escuro">+5 mil</HL> receitas. Massas, carnes,
+                  lanches... <HL corBG="escuro">Você escolhe!</HL>
                 </Text>
               </Grid.Col>
               <Grid.Col md={5} xs={12}>
-                <img src={Search} alt="" />
+                <Image src={Search} alt="" height={"300px"} />
               </Grid.Col>
             </Grid>
           </MediaQuery>
@@ -95,7 +96,7 @@ export const Home = () => {
       <Container size="xl">
         <Grid>
           <Grid.Col md={5} xs={12}>
-            <img src={Receita} alt="" />
+            <Image src={Receita} alt="" height={"300px"} />
           </Grid.Col>
           <Grid.Col md={7} xs={12}>
             <Titulo texto="Mãos na massa" />

@@ -1,10 +1,15 @@
 import { createStyles } from "@mantine/core";
 
-const useStyles = createStyles((theme, params, getRef) => {
+interface IHighlight {
+  corBG: "escuro" | "claro";
+}
+
+const useStyles = createStyles((theme, { corBG }: IHighlight, getRef) => {
   return {
     highlight: {
       fontWeight: "bold",
-      color: "#D92211",
+      color:
+        corBG === "claro" ? theme.colors.vermelho[3] : theme.colors.dark[8],
     },
   };
 });
