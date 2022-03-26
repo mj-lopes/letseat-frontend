@@ -10,6 +10,7 @@ const GlobalStyle = () => (
       },
       body: {
         background: "#FFFAF3",
+        overflowX: "hidden",
       },
       img: {
         maxWidth: "100%",

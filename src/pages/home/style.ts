@@ -13,5 +13,15 @@ export const useStyles = createStyles(() => {
       position: "relative",
       top: "260px",
     },
+    containerHomePage: {
+      img: {
+        textAlign: "center",
+        margin: "auto",
+        "@media screen and (max-width: 1000px)": {
+          maxHeight: "300px",
+          maxWidth: "300px",
+        },
+      },
+    },
   };
 });

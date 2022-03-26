@@ -1,12 +1,21 @@
-import { Container, Grid, Space, Text, Box } from "@mantine/core";
-import { Titulo, HL, Footer, Aspas } from "../../components";
+import {
+  Container,
+  Grid,
+  Space,
+  Text,
+  Box,
+  MediaQuery,
+  Image,
+} from "@mantine/core";
+import { Titulo, HL, Aspas } from "../../components";
+import { Pesquisa } from "./Pesquisa";
 import { useStyles } from "./style";
+
 import bgPesquise from "../../assets/BGPesquisa.png";
 import FormPesquise from "../../assets/FormPesquisa.png";
 import Search from "../../assets/SearchNavegue.png";
 import Receita from "../../assets/Receita.png";
 import QuoteBG from "../../assets/QuoteBG.png";
-import { Pesquisa } from "./Pesquisa";
 
 export const Home = () => {
   const { classes } = useStyles();
@@ -20,27 +29,28 @@ export const Home = () => {
       </div>
       <Space mt={"12rem"} />
 
-      <Container size={"xl"}>
+      <Container size={"xl"} className={classes.containerHomePage}>
         <Titulo order={2} texto="Como Funciona" align="center" decoracaoLatel />
 
         <Space my={"4rem"} />
 
         <Grid>
-          <Grid.Col lg={5} md={12}>
+          <Grid.Col md={5} xs={12}>
             <Box sx={{ position: "relative" }}>
               <img src={bgPesquise} alt="" />
               <img
                 src={FormPesquise}
                 style={{
                   position: "absolute",
-                  bottom: "120px",
-                  right: "-160px",
+                  bottom: "10%",
+                  left: "15%",
                   boxShadow: "1px 3px 10px 0 #8c8c8c",
                 }}
               />
             </Box>
           </Grid.Col>
-          <Grid.Col lg={7} md={12}>
+
+          <Grid.Col md={7} xs={12}>
             <Titulo texto="Pesquise" />
             <Text color={"#3B2803"} size="lg" my={"md"}>
               Tente procurar uma receita pelo o seu nome no campo de pesquisa no{" "}
@@ -54,34 +64,40 @@ export const Home = () => {
             </Text>
           </Grid.Col>
         </Grid>
+      </Container>
+      <Space my={"2rem"} />
 
-        <Space my={"2rem"} />
+      <Box sx={(theme) => ({ backgroundColor: theme.colors.vermelho[4] })}>
+        <Container size="xl">
+          <MediaQuery
+            smallerThan={"md"}
+            styles={{ flexDirection: "column-reverse" }}
+          >
+            <Grid>
+              <Grid.Col md={7} xs={12}>
+                <Titulo texto="Navegue" cor="branco" />
+                <Text color={"#3B2803"} size="lg" my={"md"}>
+                  Escolha a sua próxima refeição através da nossa lista de{" "}
+                  <HL>+5 mil</HL> receitas. Massas, carnes, lanches...{" "}
+                  <HL>Você escolhe!</HL>
+                </Text>
+              </Grid.Col>
+              <Grid.Col md={5} xs={12}>
+                <img src={Search} alt="" />
+              </Grid.Col>
+            </Grid>
+          </MediaQuery>
+        </Container>
+      </Box>
 
+      <Space my={"2rem"} />
+
+      <Container size="xl">
         <Grid>
-          <Grid.Col lg={7} md={12}>
-            <Titulo texto="Navegue" />
-            <Text color={"#3B2803"} size="lg" my={"md"}>
-              Escolha a sua próxima refeição através da nossa lista de{" "}
-              <HL>+5 mil</HL> receitas. Massas, carnes, lanches...{" "}
-              <HL>Você escolhe!</HL>
-            </Text>
+          <Grid.Col md={5} xs={12}>
+            <img src={Receita} alt="" />
           </Grid.Col>
-          <Grid.Col lg={5} md={12}>
-            <Box>
-              <img src={Search} alt="" />
-            </Box>
-          </Grid.Col>
-        </Grid>
-
-        <Space my={"2rem"} />
-
-        <Grid>
-          <Grid.Col lg={5} md={12}>
-            <Box>
-              <img src={Receita} alt="" />
-            </Box>
-          </Grid.Col>
-          <Grid.Col lg={7} md={12}>
+          <Grid.Col md={7} xs={12}>
             <Titulo texto="Mãos na massa" />
             <Text color={"#3B2803"} size="lg" my={"md"}>
               Agora é com <HL>você</HL>. Hora de <HL>pôr as mãos na massa</HL> e
@@ -92,6 +108,7 @@ export const Home = () => {
           </Grid.Col>
         </Grid>
       </Container>
+
       <div
         style={{
           display: "flex",
@@ -108,6 +125,7 @@ export const Home = () => {
         <Titulo
           texto="There is no love sincerer than the love of food."
           align="center"
+          cor="vermelho"
           sombra
           order={3}
         />
