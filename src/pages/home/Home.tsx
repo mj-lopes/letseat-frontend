@@ -43,7 +43,7 @@ export const Home = () => {
                 sx={{
                   position: "absolute",
                   bottom: "-2.5%",
-                  left: "15%",
+                  left: "5%",
                   right: "5%",
                   filter: "drop-shadow(1px 3px 3px #8c8c8c)",
                 }}
