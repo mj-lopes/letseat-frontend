@@ -1,11 +1,9 @@
-import { MouseEventHandler, useState } from "react";
-import { RadioGroup, Radio, Text, Button, Box, Badge } from "@mantine/core";
-import { Botao, InputSearch } from "../../../components";
-import { useStyles } from "./style";
-import { pegarTodasReceitas } from "../../../api";
+import { Box, Radio, RadioGroup, Text } from "@mantine/core";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { BadgeIngrediente, Botao, InputSearch } from "../../../components";
 import { GlobalContext } from "../../../contextApi";
+import { useStyles } from "./style";
 
 export const Pesquisa = () => {
   const [tipoPesquisa, setTipoPesquisa] = useState<"receita" | "ingredientes">(
@@ -16,8 +14,8 @@ export const Pesquisa = () => {
   const navigator = useNavigate();
   const global = useContext(GlobalContext);
 
-  const handlerRemoveIngrediente: MouseEventHandler<HTMLDivElement> = (el) => {
-    const ingrediente = el.currentTarget.innerText.toLocaleLowerCase();
+  const handlerRemoveIngrediente = (el: string) => {
+    const ingrediente = el.toLocaleLowerCase();
     const newArrIngredientes =
       global?.listaIngredientes.filter((el) => el !== ingrediente) || [];
 
@@ -88,13 +86,12 @@ export const Pesquisa = () => {
       {tipoPesquisa === "ingredientes" ? (
         <Box className={classes.containerBadgers} mt="lg">
           {global?.listaIngredientes.map((el) => (
-            <Badge
-              color={"vermelho"}
-              onClick={handlerRemoveIngrediente}
+            <BadgeIngrediente
+              onClick={() => handlerRemoveIngrediente(el)}
               key={el}
             >
               {el}
-            </Badge>
+            </BadgeIngrediente>
           ))}
         </Box>
       ) : (
