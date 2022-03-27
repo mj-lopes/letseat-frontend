@@ -4,10 +4,10 @@ export const useStyles = createStyles((theme, params) => {
   return {
     containerPesquisa: {
       display: "block",
-      minHeight: "175px",
+      minHeight: "185px",
       maxWidth: "850px",
 
-      margin: "auto",
+      margin: "2rem auto",
       padding: "1rem",
 
       backgroundColor: "white",
