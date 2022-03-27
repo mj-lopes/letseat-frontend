@@ -1,6 +1,6 @@
 import { MouseEventHandler, useState } from "react";
 import { RadioGroup, Radio, Text, Button, Box, Badge } from "@mantine/core";
-import { InputSearch } from "../../../components";
+import { Botao, InputSearch } from "../../../components";
 import { useStyles } from "./style";
 import { pegarTodasReceitas } from "../../../api";
 import { useNavigate } from "react-router-dom";
@@ -69,19 +69,19 @@ export const Pesquisa = () => {
             sx={{ flex: "1" }}
           />
           {tipoPesquisa === "ingredientes" ? (
-            <Button
-              color={"vermelho"}
+            <Botao
+              cor={"vermelho"}
               uppercase
               onClick={handlerAdicionaIngrediente}
             >
               Adicionar Ingrediente
-            </Button>
+            </Botao>
           ) : (
             ""
           )}
-          <Button color={"azul"} uppercase type="submit">
+          <Botao cor={"azul"} uppercase type="submit">
             Pesquisar
-          </Button>
+          </Botao>
         </Box>
       </form>
 
