@@ -1,5 +1,6 @@
 import { Header } from "./Header";
 import { Titulo } from "./Titulo";
+import { Subtitulo } from "./Subtitulo";
 import { Highlight } from "./Highlight";
 import { Footer } from "./Footer";
 import { Aspas } from "./Aspas";
@@ -16,4 +17,5 @@ export {
   InputSearch,
   Botao,
   BadgeIngrediente,
+  Subtitulo,
 };
