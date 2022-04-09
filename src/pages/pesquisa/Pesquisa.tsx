@@ -1,23 +1,34 @@
 import { Box, Radio, RadioGroup, Slider, Text } from "@mantine/core";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { useParams } from "react-router-dom";
 import StarRatings from "react-star-ratings";
 
-import { Botao, InputSearch, Subtitulo, Titulo } from "../../components";
+import { Botao, InputSearch, Subtitulo } from "../../components";
 import { useStyles } from "./style";
 
 export const Pesquisa = () => {
   const { classes } = useStyles();
+
   const [tipoPesquisa, setTipoPesquisa] = useState<"receita" | "ingredientes">(
     "receita",
   );
-  const [pesquisa, setPesquisa] = useState("");
-  const [estrela, setEstrela] = useState(0);
 
-  const handlePesquisa: React.ChangeEventHandler<HTMLInputElement> = (
-    valor,
+  const [paramFiltro, setParamFiltro] = useState({
+    pesquisa: "",
+    estrela: 0,
+    sliderTempoPreparo: 0,
+  });
+
+  const { receita } = useParams();
+
+  const handleChange = (
+    valor: ChangeEvent<HTMLInputElement> | number,
+    tipo: "pesquisa" | "estrela" | "sliderTempoPreparo",
   ) => {
-    setPesquisa(valor.currentTarget.value);
+    setParamFiltro((state) => ({
+      ...state,
+      [tipo]: typeof valor === "number" ? valor : valor.target.value,
+    }));
   };
 
   const handleTipoPesquisa = (e: "receita" | "ingredientes") => {
@@ -41,8 +52,8 @@ export const Pesquisa = () => {
 
       <InputSearch
         label="pesquisa"
-        onChange={(e) => handlePesquisa(e)}
-        value={pesquisa}
+        onChange={(e) => handleChange(e, "pesquisa")}
+        value={paramFiltro.pesquisa}
         placeholder="Ovo com areia"
         my="md"
       />
@@ -55,7 +66,7 @@ export const Pesquisa = () => {
         ) : (
           ""
         )}
-        <Botao cor="azul" uppercase>
+        <Botao cor="azul" uppercase fullWidth>
           pesquisar
         </Botao>
       </Box>
@@ -75,12 +86,16 @@ export const Pesquisa = () => {
         color="vermelho"
         size="sm"
         radius="xl"
+        value={paramFiltro.sliderTempoPreparo}
+        onChange={(valor) => handleChange(valor, "sliderTempoPreparo")}
         mb="xl"
         marks={[
           { value: 15, label: "15 min" },
           { value: 60, label: "60 min" },
           { value: 90, label: "+1.5h" },
         ]}
+        label={`${paramFiltro.sliderTempoPreparo} min`}
+        step={5}
         labelTransition="slide-up"
         labelTransitionDuration={300}
         max={90}
@@ -91,12 +106,12 @@ export const Pesquisa = () => {
           Classificação minima
         </Text>
         <StarRatings
-          rating={estrela}
+          rating={paramFiltro.estrela}
           starRatedColor="#841c1c"
-          changeRating={(num) => setEstrela(num)}
+          changeRating={(num) => handleChange(num, "estrela")}
           numberOfStars={5}
           starDimension="20px"
-          starSpacing="20px"
+          starSpacing="23px"
         />
       </div>
 
