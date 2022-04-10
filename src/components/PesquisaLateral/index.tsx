@@ -10,6 +10,7 @@ import {
   Subtitulo,
 } from "../../components";
 import { useStyles } from "./style";
+import { RatingEstrela } from "../RatingEstrelas";
 
 const Pesquisa = () => {
   const { classes } = useStyles();
@@ -124,13 +125,9 @@ const Pesquisa = () => {
         <Text weight="bold" color="azul" align="left">
           Classificação minima
         </Text>
-        <StarRatings
-          rating={paramFiltro.estrela}
-          starRatedColor="#841c1c"
-          changeRating={(num) => handleChange(num, "estrela")}
-          numberOfStars={5}
-          starDimension="20px"
-          starSpacing="23px"
+        <RatingEstrela
+          valor={paramFiltro.estrela}
+          onChange={(valor: number) => handleChange(valor, "estrela")}
         />
       </div>
     </aside>

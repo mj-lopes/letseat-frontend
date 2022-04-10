@@ -7,6 +7,7 @@ import { Aspas } from "./Aspas";
 import { InputSearch } from "./InputSearch";
 import { Botao } from "./Botao";
 import { BadgeIngrediente } from "./BadgeIngrediente";
+import { RatingEstrela } from "./RatingEstrelas";
 
 export {
   Header,
