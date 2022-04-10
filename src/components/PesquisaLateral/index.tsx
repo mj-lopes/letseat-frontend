@@ -11,6 +11,7 @@ import {
 } from "../../components";
 import { useStyles } from "./style";
 import { RatingEstrela } from "../RatingEstrelas";
+import { SliderPreparo } from "../Slider";
 
 const Pesquisa = () => {
   const { classes } = useStyles();
@@ -102,23 +103,9 @@ const Pesquisa = () => {
         Tempo máximo
       </Text>
 
-      <Slider
-        color="vermelho"
-        size="sm"
-        radius="xl"
-        value={paramFiltro.sliderTempoPreparo}
+      <SliderPreparo
+        valor={paramFiltro.sliderTempoPreparo}
         onChange={(valor) => handleChange(valor, "sliderTempoPreparo")}
-        mb="xl"
-        marks={[
-          { value: 15, label: "15 min" },
-          { value: 60, label: "60 min" },
-          { value: 90, label: "+1.5h" },
-        ]}
-        label={`${paramFiltro.sliderTempoPreparo} min`}
-        step={5}
-        labelTransition="slide-up"
-        labelTransitionDuration={300}
-        max={90}
       />
 
       <div className={classes.estrelas}>

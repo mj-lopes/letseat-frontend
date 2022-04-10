@@ -8,6 +8,7 @@ import { InputSearch } from "./InputSearch";
 import { Botao } from "./Botao";
 import { BadgeIngrediente } from "./BadgeIngrediente";
 import { RatingEstrela } from "./RatingEstrelas";
+import { SliderPreparo } from "./Slider";
 
 export {
   Header,
