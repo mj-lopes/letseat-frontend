@@ -12,5 +12,10 @@ export const useStyles = createStyles((theme, params) => {
       margin: "3rem auto 1rem auto",
       textAlign: "center",
     },
+    wrapperBotoes: {
+      display: "flex",
+      gap: ".5rem",
+      marginTop: "1rem",
+    },
   };
 });
