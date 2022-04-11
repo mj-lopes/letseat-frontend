@@ -1,8 +1,9 @@
 import { Box, Container } from "@mantine/core";
 import { useStyles } from "./style";
 import LogoMarca from "../../assets/logomarca.svg";
+import { memo } from "react";
 
-export const Header = () => {
+export const HeaderComponent = () => {
   const { classes: S_Header } = useStyles();
 
   return (
@@ -17,3 +18,5 @@ export const Header = () => {
     </header>
   );
 };
+
+export const Header = memo(HeaderComponent);

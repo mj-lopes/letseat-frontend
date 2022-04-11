@@ -1,4 +1,5 @@
 import { Title, TitleProps } from "@mantine/core";
+import { memo } from "react";
 import { useStyles } from "./style";
 
 interface ITitulo extends TitleProps {
@@ -8,7 +9,7 @@ interface ITitulo extends TitleProps {
   cor?: "azul" | "vermelho" | "branco";
 }
 
-export const Titulo = ({
+const componenteTitulo = ({
   texto,
   decoracaoLatel = false,
   sombra = false,
@@ -23,3 +24,5 @@ export const Titulo = ({
     </Title>
   );
 };
+
+export const Titulo = memo(componenteTitulo);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Box, Container, Space, Text } from "@mantine/core";
 import Whats from "../../assets/whatsapp 1.svg";
 import FB from "../../assets/facebook.svg";
@@ -7,7 +7,7 @@ import Twitter from "../../assets/twitter.svg";
 import logobg from "../../assets/logo-bg.svg";
 import { useStyle } from "./style";
 
-export const Footer = () => {
+export const FooterComponent = () => {
   const { classes } = useStyle();
 
   return (
@@ -50,3 +50,5 @@ export const Footer = () => {
     </footer>
   );
 };
+
+export const Footer = memo(FooterComponent);

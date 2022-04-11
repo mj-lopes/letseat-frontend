@@ -1,16 +1,12 @@
 import { Badge, BadgeProps } from "@mantine/core";
-import { MouseEventHandler, useState } from "react";
+import { memo, MouseEventHandler, useState } from "react";
 
 interface IBadgeIng extends BadgeProps<any> {
   children: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
-export const BadgeIngrediente = ({
-  children,
-  onClick,
-  ...props
-}: IBadgeIng) => {
+export const BadgeIng = ({ children, onClick, ...props }: IBadgeIng) => {
   const [estaEncima, setEstaEncima] = useState(false);
 
   const handleMouseEnter: MouseEventHandler<HTMLDivElement> = () => {
@@ -33,3 +29,5 @@ export const BadgeIngrediente = ({
     </Badge>
   );
 };
+
+export const BadgeIngrediente = memo(BadgeIng);

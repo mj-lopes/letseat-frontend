@@ -1,17 +1,14 @@
+import { Box, Radio, RadioGroup, Text } from "@mantine/core";
 import React, { ChangeEvent, memo, useState } from "react";
-
-import { Box, Radio, RadioGroup, Slider, Text } from "@mantine/core";
-import StarRatings from "react-star-ratings";
-
 import {
   BadgeIngrediente,
   Botao,
   InputSearch,
   Subtitulo,
 } from "../../components";
-import { useStyles } from "./style";
 import { RatingEstrela } from "../RatingEstrelas";
 import { SliderPreparo } from "../Slider";
+import { useStyles } from "./style";
 
 const Pesquisa = () => {
   const { classes } = useStyles();
@@ -47,9 +44,9 @@ const Pesquisa = () => {
     }
   };
 
-  const handleExcluirIngrediente = () => {
+  const handlerRemoveIngrediente = (ingredienteParaRemover: string) => {
     const novoArr = listaIngredientes.filter(
-      (ingrediente) => ingrediente !== paramFiltro.pesquisa,
+      (ingrediente) => ingrediente !== ingredienteParaRemover,
     );
     setListaIngredientes(novoArr);
   };
@@ -78,7 +75,10 @@ const Pesquisa = () => {
 
       {tipoPesquisa === "ingredientes"
         ? listaIngredientes.map((ingrediente) => (
-            <BadgeIngrediente onClick={handleExcluirIngrediente}>
+            <BadgeIngrediente
+              onClick={() => handlerRemoveIngrediente(ingrediente)}
+              key={`ingrediente - ${ingrediente}`}
+            >
               {ingrediente}
             </BadgeIngrediente>
           ))

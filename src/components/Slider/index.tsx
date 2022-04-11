@@ -1,12 +1,11 @@
 import { Slider } from "@mantine/core";
-import React, { memo } from "react";
 
 interface ISlider {
   valor: number;
   onChange: (valor: number) => void;
 }
 
-const SL = ({ valor, onChange }: ISlider) => {
+export const SliderPreparo = ({ valor, onChange }: ISlider) => {
   return (
     <Slider
       color="vermelho"
@@ -28,5 +27,3 @@ const SL = ({ valor, onChange }: ISlider) => {
     />
   );
 };
-
-export const SliderPreparo = memo(SL);

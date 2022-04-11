@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { memo, ReactNode } from "react";
 import { useStyles } from "./style";
 
 interface IHighlight {
@@ -11,3 +11,5 @@ export const Highlight = ({ children, corBG = "claro" }: IHighlight) => {
 
   return <span className={classes.highlight}>{children}</span>;
 };
+
+export const HL = memo(Highlight);
