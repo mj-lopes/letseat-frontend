@@ -1,54 +1,29 @@
 import { Box, Radio, RadioGroup, Text } from "@mantine/core";
-import React, { ChangeEvent, memo, useState } from "react";
+import React, { ChangeEvent, memo, useContext, useState } from "react";
 import {
   BadgeIngrediente,
   Botao,
   InputSearch,
   Subtitulo,
 } from "../../components";
+import { GlobalContext } from "../../contextApi";
 import { RatingEstrela } from "../RatingEstrelas";
 import { SliderPreparo } from "../Slider";
 import { useStyles } from "./style";
 
 const Pesquisa = () => {
+  const [input, setInput] = useState("");
+  const global = useContext(GlobalContext);
   const { classes } = useStyles();
 
-  const [tipoPesquisa, setTipoPesquisa] = useState<"receita" | "ingredientes">(
-    "receita",
-  );
-  const [listaIngredientes, setListaIngredientes] = useState<string[]>([]);
-
-  const [paramFiltro, setParamFiltro] = useState({
-    pesquisa: "",
-    estrela: 0,
-    sliderTempoPreparo: 0,
-  });
-
-  const handleChange = (
-    valor: ChangeEvent<HTMLInputElement> | number,
-    tipo: "pesquisa" | "estrela" | "sliderTempoPreparo",
-  ) => {
-    setParamFiltro((state) => ({
-      ...state,
-      [tipo]: typeof valor === "number" ? valor : valor.target.value,
-    }));
-  };
-
-  const handleTipoPesquisa = (e: "receita" | "ingredientes") => {
-    setTipoPesquisa(e);
-  };
-
-  const handleAddIngrediente = () => {
-    if (!listaIngredientes.includes(paramFiltro.pesquisa)) {
-      setListaIngredientes((state) => [...state, paramFiltro.pesquisa]);
+  const handleSubmitPesquisa = () => {
+    if (global.tipoPesquisa === "ingredientes") {
+      console.table(global.paramFiltro);
+      console.log(JSON.stringify({ ingredientes: global.listaIngredientes }));
+    } else {
+      console.table(global.paramFiltro);
+      console.log(global.tipoPesquisa);
     }
-  };
-
-  const handlerRemoveIngrediente = (ingredienteParaRemover: string) => {
-    const novoArr = listaIngredientes.filter(
-      (ingrediente) => ingrediente !== ingredienteParaRemover,
-    );
-    setListaIngredientes(novoArr);
   };
 
   return (
@@ -58,8 +33,10 @@ const Pesquisa = () => {
       <RadioGroup
         color={"vermelho"}
         my="md"
-        value={tipoPesquisa}
-        onChange={(e: "receita" | "ingredientes") => handleTipoPesquisa(e)}
+        value={global.tipoPesquisa}
+        onChange={(e: "receita" | "ingredientes") =>
+          global.selecionarTipoPesquisa(e)
+        }
       >
         <Radio value="receita">Nome</Radio>
         <Radio value="ingredientes">Ingredientes</Radio>
@@ -67,16 +44,16 @@ const Pesquisa = () => {
 
       <InputSearch
         label="pesquisa"
-        onChange={(e) => handleChange(e, "pesquisa")}
-        value={paramFiltro.pesquisa}
+        onChange={({ currentTarget }) => setInput(currentTarget.value)}
+        value={input}
         placeholder="Ovo com areia"
         my="md"
       />
 
-      {tipoPesquisa === "ingredientes"
-        ? listaIngredientes.map((ingrediente) => (
+      {global.tipoPesquisa === "ingredientes"
+        ? global.listaIngredientes.map((ingrediente) => (
             <BadgeIngrediente
-              onClick={() => handlerRemoveIngrediente(ingrediente)}
+              onClick={() => global.removerIngrediente(ingrediente)}
               key={`ingrediente - ${ingrediente}`}
             >
               {ingrediente}
@@ -85,14 +62,18 @@ const Pesquisa = () => {
         : ""}
 
       <Box className={classes.wrapperBotoes}>
-        {tipoPesquisa === "ingredientes" ? (
-          <Botao cor="vermelho" uppercase onClick={handleAddIngrediente}>
+        {global.tipoPesquisa === "ingredientes" ? (
+          <Botao
+            cor="vermelho"
+            uppercase
+            onClick={() => global.addIngrediente(input)}
+          >
             add ingrediente
           </Botao>
         ) : (
           ""
         )}
-        <Botao cor="azul" uppercase fullWidth>
+        <Botao cor="azul" uppercase fullWidth onClick={handleSubmitPesquisa}>
           pesquisar
         </Botao>
       </Box>
@@ -104,8 +85,8 @@ const Pesquisa = () => {
       </Text>
 
       <SliderPreparo
-        valor={paramFiltro.sliderTempoPreparo}
-        onChange={(valor) => handleChange(valor, "sliderTempoPreparo")}
+        valor={global.paramFiltro.tempoPreparo}
+        onChange={(valor) => global.alterarCampoFiltro("tempoPreparo", valor)}
       />
 
       <div className={classes.estrelas}>
@@ -113,8 +94,10 @@ const Pesquisa = () => {
           Classificação minima
         </Text>
         <RatingEstrela
-          valor={paramFiltro.estrela}
-          onChange={(valor: number) => handleChange(valor, "estrela")}
+          valor={global.paramFiltro.estrela}
+          onChange={(valor: number) =>
+            global.alterarCampoFiltro("estrela", valor)
+          }
         />
       </div>
     </aside>
