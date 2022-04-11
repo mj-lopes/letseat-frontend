@@ -20,4 +20,6 @@ export {
   Botao,
   BadgeIngrediente,
   Subtitulo,
+  RatingEstrela,
+  SliderPreparo,
 };

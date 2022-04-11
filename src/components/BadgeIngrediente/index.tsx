@@ -1,32 +1,27 @@
 import { Badge, BadgeProps } from "@mantine/core";
-import { memo, MouseEventHandler, useState } from "react";
+import { memo } from "react";
+import { useStyles } from "./style";
 
 interface IBadgeIng extends BadgeProps<any> {
-  children: string;
-  onClick?: MouseEventHandler<HTMLDivElement>;
+  ingredientes: string[];
+  onClick: (ingrediente: string) => void;
 }
 
-export const BadgeIng = ({ children, onClick, ...props }: IBadgeIng) => {
-  const [estaEncima, setEstaEncima] = useState(false);
-
-  const handleMouseEnter: MouseEventHandler<HTMLDivElement> = () => {
-    setEstaEncima(!false);
-  };
-
-  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
-    setEstaEncima(!true);
-  };
+export const BadgeIng = ({ ingredientes, onClick }: IBadgeIng) => {
+  const { classes } = useStyles();
 
   return (
-    <Badge
-      color="vermelho"
-      onClick={onClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      {...props}
-    >
-      {!estaEncima ? children : "Excluir?"}
-    </Badge>
+    <div className={classes.wrapper}>
+      {ingredientes?.map((ingrediente) => (
+        <Badge
+          color="vermelho"
+          onClick={() => onClick(ingrediente)}
+          className={classes.badge}
+        >
+          {`${ingrediente} x`}
+        </Badge>
+      ))}
+    </div>
   );
 };
 

@@ -1,14 +1,15 @@
+import React, { memo, useContext, useState } from "react";
 import { Box, Radio, RadioGroup, Text } from "@mantine/core";
-import React, { ChangeEvent, memo, useContext, useState } from "react";
 import {
   BadgeIngrediente,
   Botao,
   InputSearch,
   Subtitulo,
+  RatingEstrela,
+  SliderPreparo,
 } from "../../components";
+
 import { GlobalContext } from "../../contextApi";
-import { RatingEstrela } from "../RatingEstrelas";
-import { SliderPreparo } from "../Slider";
 import { useStyles } from "./style";
 
 const Pesquisa = () => {
@@ -50,16 +51,17 @@ const Pesquisa = () => {
         my="md"
       />
 
-      {global.tipoPesquisa === "ingredientes"
-        ? global.listaIngredientes.map((ingrediente) => (
-            <BadgeIngrediente
-              onClick={() => global.removerIngrediente(ingrediente)}
-              key={`ingrediente - ${ingrediente}`}
-            >
-              {ingrediente}
-            </BadgeIngrediente>
-          ))
-        : ""}
+      {global.tipoPesquisa === "ingredientes" &&
+      global.listaIngredientes.length ? (
+        <BadgeIngrediente
+          ingredientes={global.listaIngredientes}
+          onClick={(ingrediente: string) =>
+            global.removerIngrediente(ingrediente)
+          }
+        />
+      ) : (
+        ""
+      )}
 
       <Box className={classes.wrapperBotoes}>
         {global.tipoPesquisa === "ingredientes" ? (
@@ -86,7 +88,9 @@ const Pesquisa = () => {
 
       <SliderPreparo
         valor={global.paramFiltro.tempoPreparo}
-        onChange={(valor) => global.alterarCampoFiltro("tempoPreparo", valor)}
+        onChange={(valor: number) =>
+          global.alterarCampoFiltro("tempoPreparo", valor)
+        }
       />
 
       <div className={classes.estrelas}>
