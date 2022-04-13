@@ -11,19 +11,37 @@ import {
 
 import { GlobalContext } from "../../contextApi";
 import { useStyles } from "./style";
+import { pegarReceitaPorIngredientes, pegarReceitaPorNome } from "../../api";
 
 const Pesquisa = () => {
   const [input, setInput] = useState("");
   const global = useContext(GlobalContext);
   const { classes } = useStyles();
 
-  const handleSubmitPesquisa = () => {
+  const handleSubmitPesquisa = async () => {
     if (global.tipoPesquisa === "ingredientes") {
-      console.table(global.paramFiltro);
-      console.log(JSON.stringify({ ingredientes: global.listaIngredientes }));
+      try {
+        const { url, options } = pegarReceitaPorIngredientes(
+          1,
+          12,
+          4,
+          90,
+          global.listaIngredientes,
+        );
+        const resp = await fetch(url, options).then((resp) => resp.json());
+
+        console.log(resp);
+      } catch (err) {
+        console.log(err);
+      }
     } else {
-      console.table(global.paramFiltro);
-      console.log(global.tipoPesquisa);
+      try {
+        const { url, options } = pegarReceitaPorNome(1, 12, 4, 90, input);
+        const resp = await fetch(url, options).then((resp) => resp.json());
+        console.log(resp);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
