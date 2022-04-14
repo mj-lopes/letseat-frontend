@@ -12,37 +12,42 @@ import {
 import { GlobalContext } from "../../contextApi";
 import { useStyles } from "./style";
 import { pegarReceitaPorIngredientes, pegarReceitaPorNome } from "../../api";
+import { useNavigate } from "react-router-dom";
 
 const Pesquisa = () => {
   const [input, setInput] = useState("");
   const global = useContext(GlobalContext);
   const { classes } = useStyles();
+  const navigator = useNavigate();
 
-  const handleSubmitPesquisa = async () => {
+  const handleSubmitPesquisa = () => {
     if (global.tipoPesquisa === "ingredientes") {
-      try {
-        const { url, options } = pegarReceitaPorIngredientes(
-          1,
-          12,
-          4,
-          90,
-          global.listaIngredientes,
-        );
+      navigator(`/pesquisa/ingredientes`);
+      // try {
+      //   const { url, options } = pegarReceitaPorIngredientes(
+      //     1,
+      //     12,
+      //     4,
+      //     90,
+      //     global.listaIngredientes,
+      //   );
 
-        await global.fetchDados(url, options);
+      //   await global.fetchDados(url, options);
 
-        console.log(global.dados);
-      } catch (err) {
-        console.log(err);
-      }
+      //   console.log(global.dados);
+      // } catch (err) {
+      //   console.log(err);
+      // }
     } else {
-      try {
-        const { url, options } = pegarReceitaPorNome(1, 12, 4, 90, input);
-        const resp = await fetch(url, options).then((resp) => resp.json());
-        console.log(resp);
-      } catch (err) {
-        console.error(err);
-      }
+      navigator(`/pesquisa/${input}`);
+
+      // try {
+      //   const { url, options } = pegarReceitaPorNome(1, 12, 4, 90, input);
+      //   const resp = await fetch(url, options).then((resp) => resp.json());
+      //   console.log(resp);
+      // } catch (err) {
+      //   console.error(err);
+      // }
     }
   };
 
