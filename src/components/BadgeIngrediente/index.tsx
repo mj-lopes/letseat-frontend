@@ -17,6 +17,7 @@ export const BadgeIng = ({ ingredientes, onClick }: IBadgeIng) => {
           color="vermelho"
           onClick={() => onClick(ingrediente)}
           className={classes.badge}
+          key={`ingrediente - ${ingrediente}`}
         >
           {`${ingrediente} x`}
         </Badge>
