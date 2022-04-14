@@ -28,9 +28,10 @@ const Pesquisa = () => {
           90,
           global.listaIngredientes,
         );
-        const resp = await fetch(url, options).then((resp) => resp.json());
 
-        console.log(resp);
+        await global.fetchDados(url, options);
+
+        console.log(global.dados);
       } catch (err) {
         console.log(err);
       }

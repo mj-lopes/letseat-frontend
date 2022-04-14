@@ -12,6 +12,9 @@ interface IGlobalStorage {
     campo: "estrela" | "tempoPreparo",
     valor: number,
   ) => void;
+  dados: [];
+  erro: any;
+  fetchDados: (url: string, options: {}) => Promise<void>;
 }
 
 interface IGlobalStorageChildren {
@@ -25,6 +28,8 @@ export const GlobalContext = createContext<IGlobalStorage>(
 export const GlobalStorage = ({ children }: IGlobalStorageChildren) => {
   const [listaIngredientes, setListaIngredientes] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [dados, setDados] = useState<[]>([]);
+  const [erro, setErro] = useState<string>("");
 
   const [tipoPesquisa, setTipoPesquisa] = useState<"receita" | "ingredientes">(
     "receita",
@@ -52,6 +57,20 @@ export const GlobalStorage = ({ children }: IGlobalStorageChildren) => {
     setTipoPesquisa(e);
   };
 
+  const fetchDados = async (url: string, options: {}) => {
+    try {
+      setLoading(true);
+
+      const dados = await fetch(url, options).then((r) => r.json());
+
+      setDados(dados);
+    } catch (error: any) {
+      setErro(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const alterarCampoFiltro = (
     campo: "estrela" | "tempoPreparo",
     valor: number,
@@ -66,13 +85,16 @@ export const GlobalStorage = ({ children }: IGlobalStorageChildren) => {
     <GlobalContext.Provider
       value={{
         listaIngredientes,
-        loading,
         tipoPesquisa,
         paramFiltro,
         addIngrediente,
         removerIngrediente,
         selecionarTipoPesquisa,
         alterarCampoFiltro,
+        loading,
+        dados,
+        erro,
+        fetchDados,
       }}
     >
       {children}
