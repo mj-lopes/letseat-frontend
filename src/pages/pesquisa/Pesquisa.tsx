@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, Routes, Route } from "react-router-dom";
 import { pegarReceitaPorIngredientes, pegarReceitaPorNome } from "../../api";
+import { HL, Titulo } from "../../components";
+import { CardReceita } from "../../components/CardReceita";
 import { PesquisaLateral } from "../../components/PesquisaLateral";
 import { GlobalContext } from "../../contextApi";
 import { Receita } from "../../types/reseita";
@@ -12,12 +14,14 @@ export const Pesquisa = () => {
 
   useEffect(() => {
     if (receita) {
+      const nomeReceita = receita.split(" ").join("+");
+
       const { url, options } = pegarReceitaPorNome(
         page,
         12,
         global.paramFiltro.estrela,
         global.paramFiltro.tempoPreparo,
-        receita,
+        nomeReceita,
       );
 
       (async function () {
@@ -39,17 +43,25 @@ export const Pesquisa = () => {
   }, [receita, global.listaIngredientes, global.paramFiltro]);
 
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", gap: "1rem" }}>
       <PesquisaLateral />
 
-      <div style={{ marginTop: "6rem" }}>
-        <h1>{receita}</h1>
-        {global.dados?.map((res: Receita) => (
-          <>
-            <h1 key={`receita - ${res.titulo}`}>{res.titulo}</h1>
-            {/* <img src={res.imgUrl} alt={res.titulo} /> */}
-          </>
-        ))}
+      <div style={{ marginTop: "7rem", marginRight: "1rem", flex: "1" }}>
+        <Titulo fontCaveat={false} mb="md">
+          Pesquisando: "<HL>{receita}</HL>"
+        </Titulo>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, 300px)",
+            gap: "1rem",
+            justifyContent: "space-between",
+          }}
+        >
+          {global.dados?.map((res: Receita) => (
+            <CardReceita receita={res} />
+          ))}
+        </div>
       </div>
     </div>
   );

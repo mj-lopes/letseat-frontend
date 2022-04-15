@@ -60,6 +60,7 @@ export const GlobalStorage = ({ children }: IGlobalStorageChildren) => {
   const fetchDados = async (url: string, options: {}) => {
     try {
       setLoading(true);
+      console.log(url);
 
       const dados = await fetch(url, options).then((r) => r.json());
 

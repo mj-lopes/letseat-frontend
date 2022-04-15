@@ -1,26 +1,28 @@
 import { Title, TitleProps } from "@mantine/core";
-import { memo } from "react";
+import React, { memo } from "react";
 import { useStyles } from "./style";
 
 interface ITitulo extends TitleProps {
-  texto: string;
+  children: React.ReactNode;
   decoracaoLatel?: boolean;
   sombra?: boolean;
   cor?: "azul" | "vermelho" | "branco";
+  fontCaveat?: boolean;
 }
 
 const componenteTitulo = ({
-  texto,
+  children,
   decoracaoLatel = false,
   sombra = false,
   cor = "azul",
+  fontCaveat = true,
   ...props
 }: ITitulo) => {
-  const { classes } = useStyles({ decoracaoLatel, sombra, cor });
+  const { classes } = useStyles({ decoracaoLatel, sombra, cor, fontCaveat });
 
   return (
     <Title className={classes.titulo} {...props}>
-      {texto}
+      {children}
     </Title>
   );
 };

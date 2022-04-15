@@ -4,10 +4,11 @@ interface ITitulo {
   decoracaoLatel: boolean;
   sombra: boolean;
   cor: "azul" | "vermelho" | "branco";
+  fontCaveat: boolean;
 }
 
 const useStyles = createStyles(
-  (theme, { decoracaoLatel, sombra, cor }: ITitulo) => {
+  (theme, { decoracaoLatel, sombra, cor, fontCaveat = true }: ITitulo) => {
     return {
       titulo: {
         color:
@@ -21,8 +22,9 @@ const useStyles = createStyles(
         justifyContent: decoracaoLatel ? "space-between" : "center",
         alignItems: "center",
         gap: "1rem",
-        fontSize: "clamp(1rem, 1rem + 6vw, 4.5rem)",
+        fontSize: "clamp(1rem, 1rem + 6vw, 3rem)",
         textShadow: sombra ? "clamp(1px, 1px + .1vw, 3px) 1px #003049" : "",
+        fontFamily: fontCaveat ? theme.headings.fontFamily : theme.fontFamily,
 
         "::before, ::after": {
           display: decoracaoLatel ? "inline-block" : "none",
