@@ -1,3 +1,4 @@
+import { Text } from "@mantine/core";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, Routes, Route } from "react-router-dom";
 import { pegarReceitaPorIngredientes, pegarReceitaPorNome } from "../../api";
@@ -47,19 +48,31 @@ export const Pesquisa = () => {
       <PesquisaLateral />
 
       <div style={{ marginTop: "7rem", marginRight: "1rem", flex: "1" }}>
-        <Titulo fontCaveat={false} mb="md">
+        <Titulo fontCaveat={false}>
           Pesquisando: "<HL>{receita}</HL>"
         </Titulo>
+        <Text
+          sx={{
+            position: "relative",
+            left: "300px",
+            marginBottom: "32px",
+            fontWeight: "bold",
+          }}
+          color="azul"
+        >
+          <HL>{global.dados.total}</HL> RECEITAS ENCONTRADAS
+        </Text>
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, 300px)",
+            gridTemplateColumns: "repeat(auto-fill, 275px)",
             gap: "1rem",
             justifyContent: "space-between",
+            marginBottom: "10rem",
           }}
         >
-          {global.dados?.map((res: Receita) => (
-            <CardReceita receita={res} />
+          {global.dados.respostaQuery?.map((res: Receita) => (
+            <CardReceita receita={res} key={`receita - ${res.titulo}`} />
           ))}
         </div>
       </div>

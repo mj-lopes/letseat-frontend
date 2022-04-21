@@ -12,13 +12,18 @@ interface IGlobalStorage {
     campo: "estrela" | "tempoPreparo",
     valor: number,
   ) => void;
-  dados: [];
+  dados: { total: number; respostaQuery: [] };
   erro: any;
   fetchDados: (url: string, options: {}) => Promise<void>;
 }
 
 interface IGlobalStorageChildren {
   children: React.ReactNode;
+}
+
+interface IdadosFetch {
+  total: number;
+  respostaQuery: [];
 }
 
 export const GlobalContext = createContext<IGlobalStorage>(
@@ -28,7 +33,7 @@ export const GlobalContext = createContext<IGlobalStorage>(
 export const GlobalStorage = ({ children }: IGlobalStorageChildren) => {
   const [listaIngredientes, setListaIngredientes] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [dados, setDados] = useState<[]>([]);
+  const [dados, setDados] = useState({} as IdadosFetch);
   const [erro, setErro] = useState<string>("");
 
   const [tipoPesquisa, setTipoPesquisa] = useState<"receita" | "ingredientes">(
@@ -60,7 +65,6 @@ export const GlobalStorage = ({ children }: IGlobalStorageChildren) => {
   const fetchDados = async (url: string, options: {}) => {
     try {
       setLoading(true);
-      console.log(url);
 
       const dados = await fetch(url, options).then((r) => r.json());
 

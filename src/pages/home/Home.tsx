@@ -23,14 +23,18 @@ export const Home = () => {
     <>
       <div className={classes.imgBG}>
         <Container className={classes.tituloWrapper} size={"xl"}>
-          <Titulo texto="O que Vamos Comer Hoje?" align="center" mb={"md"} />
+          <Titulo align="center" mb="md">
+            O que Vamos Comer Hoje?
+          </Titulo>
           <Pesquisa />
         </Container>
       </div>
       <Space mt={"12rem"} />
 
       <Container size={"xl"} className={classes.containerHomePage}>
-        <Titulo order={2} texto="Como Funciona" align="center" decoracaoLatel />
+        <Titulo order={2} align="center" decoracaoLatel>
+          Como Funciona
+        </Titulo>
 
         <Space my={"4rem"} />
 
@@ -52,7 +56,7 @@ export const Home = () => {
           </Grid.Col>
 
           <Grid.Col md={7} xs={12}>
-            <Titulo texto="Pesquise" />
+            <Titulo order={3}>Pesquise</Titulo>
             <Text color={"#3B2803"} size="lg" my={"md"}>
               Tente procurar uma receita pelo o seu nome no campo de pesquisa no{" "}
               <HL>topo da página ou na aba lateral</HL>.
@@ -76,7 +80,9 @@ export const Home = () => {
           >
             <Grid>
               <Grid.Col md={7} xs={12}>
-                <Titulo texto="Navegue" cor="branco" />
+                <Titulo order={3} cor="branco">
+                  Navegue
+                </Titulo>
                 <Text color="white" size="lg" my={"md"}>
                   Escolha a sua próxima refeição através da nossa lista de{" "}
                   <HL corBG="escuro">+5 mil</HL> receitas. Massas, carnes,
@@ -99,7 +105,7 @@ export const Home = () => {
             <Image src={Receita} alt="" height={"300px"} />
           </Grid.Col>
           <Grid.Col md={7} xs={12}>
-            <Titulo texto="Mãos na massa" />
+            <Titulo order={3}>Mãos na massa</Titulo>
             <Text color={"#3B2803"} size="lg" my={"md"}>
               Agora é com <HL>você</HL>. Hora de <HL>pôr as mãos na massa</HL> e
               preparar aquele prato para a pessoa que você ama. Pode contar que
@@ -123,13 +129,9 @@ export const Home = () => {
         }}
       >
         <Aspas />
-        <Titulo
-          texto="There is no love sincerer than the love of food."
-          align="center"
-          cor="vermelho"
-          sombra
-          order={3}
-        />
+        <Titulo align="center" cor="vermelho" sombra order={3}>
+          There is no love sincerer than the love of food.
+        </Titulo>
       </div>
     </>
   );

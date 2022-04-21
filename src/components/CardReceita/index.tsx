@@ -19,7 +19,6 @@ interface ICard {
 }
 
 const CD = ({ receita }: ICard) => {
-  console.log(receita);
   const { classes } = useStyle();
 
   return (
