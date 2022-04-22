@@ -40,7 +40,7 @@ const CD = ({ receita }: ICard) => {
       <Text className={classes.categoria}>{receita.categoria}</Text>
 
       <CardSection>
-        <Divider my="md" className={classes.divisor} />
+        <Divider my="sm" className={classes.divisor} />
       </CardSection>
 
       <Box className={classes.detalhesContainer}>

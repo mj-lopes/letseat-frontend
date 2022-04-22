@@ -1,9 +1,10 @@
-import { Text } from "@mantine/core";
+import { Pagination, Text } from "@mantine/core";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, Routes, Route } from "react-router-dom";
 import { pegarReceitaPorIngredientes, pegarReceitaPorNome } from "../../api";
 import { HL, Titulo } from "../../components";
 import { CardReceita } from "../../components/CardReceita";
+import { Paginacao } from "../../components/Paginacao";
 import { PesquisaLateral } from "../../components/PesquisaLateral";
 import { GlobalContext } from "../../contextApi";
 import { Receita } from "../../types/reseita";
@@ -12,6 +13,7 @@ export const Pesquisa = () => {
   const { receita } = useParams();
   const global = useContext(GlobalContext);
   const [page, setPage] = useState<number>(1);
+  const [limite, setLimite] = useState<number>(12);
 
   useEffect(() => {
     if (receita) {
@@ -19,7 +21,7 @@ export const Pesquisa = () => {
 
       const { url, options } = pegarReceitaPorNome(
         page,
-        12,
+        limite,
         global.paramFiltro.estrela,
         global.paramFiltro.tempoPreparo,
         nomeReceita,
@@ -31,7 +33,7 @@ export const Pesquisa = () => {
     } else {
       const { url, options } = pegarReceitaPorIngredientes(
         page,
-        12,
+        limite,
         global.paramFiltro.estrela,
         global.paramFiltro.tempoPreparo,
         global.listaIngredientes,
@@ -41,10 +43,10 @@ export const Pesquisa = () => {
         await global.fetchDados(url, options);
       })();
     }
-  }, [receita, global.listaIngredientes, global.paramFiltro]);
+  }, [receita, global.listaIngredientes, global.paramFiltro, page]);
 
   return (
-    <div style={{ display: "flex", gap: "1rem" }}>
+    <div style={{ display: "flex", gap: "1rem", minHeight: "100vh" }}>
       <PesquisaLateral />
 
       <div style={{ marginTop: "7rem", marginRight: "1rem", flex: "1" }}>
@@ -65,7 +67,7 @@ export const Pesquisa = () => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, 275px)",
+            gridTemplateColumns: "repeat(auto-fill, 300px)",
             gap: "1rem",
             justifyContent: "space-between",
             marginBottom: "10rem",
@@ -75,6 +77,12 @@ export const Pesquisa = () => {
             <CardReceita receita={res} key={`receita - ${res.titulo}`} />
           ))}
         </div>
+
+        <Paginacao
+          page={page}
+          total={Math.ceil(global.dados.total / limite) || 1}
+          onChange={(pg) => setPage(pg)}
+        />
       </div>
     </div>
   );
