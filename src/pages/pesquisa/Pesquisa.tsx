@@ -13,8 +13,6 @@ import { usePgPesquisaStyle } from "./style";
 export const Pesquisa = () => {
   const { receita } = useParams();
   const global = useContext(GlobalContext);
-  const [page, setPage] = useState<number>(1);
-  const [limite, setLimite] = useState<number>(12);
 
   const { classes } = usePgPesquisaStyle();
 
@@ -23,8 +21,8 @@ export const Pesquisa = () => {
       const nomeReceita = receita.split(" ").join("+");
 
       const { url, options } = pegarReceitaPorNome(
-        page,
-        limite,
+        global.paramFiltro.page,
+        global.paramFiltro.limite,
         global.paramFiltro.estrela,
         global.paramFiltro.tempoPreparo,
         nomeReceita,
@@ -35,8 +33,8 @@ export const Pesquisa = () => {
       })();
     } else {
       const { url, options } = pegarReceitaPorIngredientes(
-        page,
-        limite,
+        global.paramFiltro.page,
+        global.paramFiltro.limite,
         global.paramFiltro.estrela,
         global.paramFiltro.tempoPreparo,
         global.listaIngredientes,
@@ -46,7 +44,7 @@ export const Pesquisa = () => {
         await global.fetchDados(url, options);
       })();
     }
-  }, [receita, global.listaIngredientes, global.paramFiltro, page]);
+  }, [receita, global.paramFiltro]);
 
   return (
     <div className={classes.pesquisaContainer}>
@@ -68,9 +66,7 @@ export const Pesquisa = () => {
         </div>
 
         <Paginacao
-          page={page}
-          total={Math.ceil(global.dados.total / limite) || 1}
-          onChange={(pg) => setPage(pg)}
+          total={Math.ceil(global.dados.total / global.paramFiltro.limite) || 1}
         />
       </div>
     </div>

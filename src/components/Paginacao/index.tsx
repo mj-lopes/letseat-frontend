@@ -1,18 +1,19 @@
 import { Pagination } from "@mantine/core";
-import React, { memo } from "react";
+import React, { memo, useContext } from "react";
+import { GlobalContext } from "../../contextApi";
 
 interface Ipaginacao {
   total: number;
-  page: number;
-  onChange: (page: number) => void;
 }
 
-const pg = ({ total, page, onChange }: Ipaginacao) => {
+const pg = ({ total }: Ipaginacao) => {
+  const global = useContext(GlobalContext);
+
   return (
     <Pagination
       total={total}
-      page={page}
-      onChange={onChange}
+      page={global.paramFiltro.page}
+      onChange={(pg) => global.alterarCampoFiltro("page", pg)}
       spacing="sm"
       color="azul"
       sx={(theme) => ({

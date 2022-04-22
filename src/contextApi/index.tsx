@@ -2,16 +2,23 @@ import React, { createContext, useState } from "react";
 
 interface IGlobalStorage {
   listaIngredientes: string[];
-  loading: boolean;
-  paramFiltro: { estrela: number; tempoPreparo: number };
+  paramFiltro: {
+    estrela: number;
+    tempoPreparo: number;
+    page: number;
+    limite: number;
+  };
   tipoPesquisa: "receita" | "ingredientes";
+
   addIngrediente: (ingrediente: string) => void;
   removerIngrediente: (ingrediente: string) => void;
   selecionarTipoPesquisa: (tipo: "receita" | "ingredientes") => void;
   alterarCampoFiltro: (
-    campo: "estrela" | "tempoPreparo",
+    campo: "estrela" | "tempoPreparo" | "page" | "limite",
     valor: number,
   ) => void;
+
+  loading: boolean;
   dados: { total: number; respostaQuery: [] };
   erro: any;
   fetchDados: (url: string, options: {}) => Promise<void>;
@@ -43,6 +50,8 @@ export const GlobalStorage = ({ children }: IGlobalStorageChildren) => {
   const [paramFiltro, setParamFiltro] = useState({
     estrela: 0,
     tempoPreparo: 0,
+    page: 1,
+    limite: 12,
   });
 
   const addIngrediente = (ingrediente: string) => {
@@ -77,7 +86,7 @@ export const GlobalStorage = ({ children }: IGlobalStorageChildren) => {
   };
 
   const alterarCampoFiltro = (
-    campo: "estrela" | "tempoPreparo",
+    campo: "estrela" | "tempoPreparo" | "page" | "limite",
     valor: number,
   ) => {
     setParamFiltro((state) => ({
