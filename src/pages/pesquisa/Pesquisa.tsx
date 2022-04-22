@@ -8,12 +8,15 @@ import { Paginacao } from "../../components/Paginacao";
 import { PesquisaLateral } from "../../components/PesquisaLateral";
 import { GlobalContext } from "../../contextApi";
 import { Receita } from "../../types/reseita";
+import { usePgPesquisaStyle } from "./style";
 
 export const Pesquisa = () => {
   const { receita } = useParams();
   const global = useContext(GlobalContext);
   const [page, setPage] = useState<number>(1);
   const [limite, setLimite] = useState<number>(12);
+
+  const { classes } = usePgPesquisaStyle();
 
   useEffect(() => {
     if (receita) {
@@ -46,33 +49,19 @@ export const Pesquisa = () => {
   }, [receita, global.listaIngredientes, global.paramFiltro, page]);
 
   return (
-    <div style={{ display: "flex", gap: "1rem", minHeight: "100vh" }}>
+    <div className={classes.pesquisaContainer}>
       <PesquisaLateral />
 
-      <div style={{ marginTop: "7rem", marginRight: "1rem", flex: "1" }}>
+      <div className={classes.resultadoPesquisaContainer}>
         <Titulo fontCaveat={false}>
           Pesquisando: "<HL>{receita}</HL>"
         </Titulo>
-        <Text
-          sx={{
-            position: "relative",
-            left: "300px",
-            marginBottom: "32px",
-            fontWeight: "bold",
-          }}
-          color="azul"
-        >
+
+        <Text className={classes.textoQTTotalReceitas} color="azul">
           <HL>{global.dados.total}</HL> RECEITAS ENCONTRADAS
         </Text>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, 300px)",
-            gap: "1rem",
-            justifyContent: "space-between",
-            marginBottom: "10rem",
-          }}
-        >
+
+        <div className={classes.cardReceitasContainer}>
           {global.dados.respostaQuery?.map((res: Receita) => (
             <CardReceita receita={res} key={`receita - ${res.titulo}`} />
           ))}
