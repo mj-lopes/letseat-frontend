@@ -13,10 +13,12 @@ import { usePgPesquisaStyle } from "./style";
 export const Pesquisa = () => {
   const { receita } = useParams();
   const global = useContext(GlobalContext);
-
   const { classes } = usePgPesquisaStyle();
+  let novaPesquisa = false;
 
   useEffect(() => {
+    if (novaPesquisa) return;
+
     if (receita) {
       const nomeReceita = receita.split(" ").join("+");
 
@@ -44,7 +46,46 @@ export const Pesquisa = () => {
         await global.fetchDados(url, options);
       })();
     }
-  }, [receita, global.paramFiltro]);
+  }, [global.paramFiltro.page]);
+
+  useEffect(() => {
+    novaPesquisa = true;
+    global.paramFiltro.page = 1;
+    if (receita) {
+      const nomeReceita = receita.split(" ").join("+");
+
+      const { url, options } = pegarReceitaPorNome(
+        global.paramFiltro.page,
+        global.paramFiltro.limite,
+        global.paramFiltro.estrela,
+        global.paramFiltro.tempoPreparo,
+        nomeReceita,
+      );
+
+      (async function () {
+        await global.fetchDados(url, options);
+      })();
+    } else {
+      const { url, options } = pegarReceitaPorIngredientes(
+        global.paramFiltro.page,
+        global.paramFiltro.limite,
+        global.paramFiltro.estrela,
+        global.paramFiltro.tempoPreparo,
+        global.listaIngredientes,
+      );
+
+      (async function () {
+        await global.fetchDados(url, options);
+      })();
+    }
+    novaPesquisa = false;
+  }, [
+    receita,
+    global.listaIngredientes,
+    global.paramFiltro.limite,
+    global.paramFiltro.estrela,
+    global.paramFiltro.tempoPreparo,
+  ]);
 
   return (
     <div className={classes.pesquisaContainer}>
