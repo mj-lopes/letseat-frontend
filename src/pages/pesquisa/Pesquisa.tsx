@@ -1,14 +1,19 @@
-import { Pagination, Text } from "@mantine/core";
-import React, { useContext, useEffect, useState } from "react";
-import { useParams, Routes, Route } from "react-router-dom";
-import { pegarReceitaPorIngredientes, pegarReceitaPorNome } from "../../api";
-import { HL, Titulo } from "../../components";
-import { CardReceita } from "../../components/CardReceita";
-import { Paginacao } from "../../components/Paginacao";
-import { PesquisaLateral } from "../../components/PesquisaLateral";
+import React, { useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { GlobalContext } from "../../contextApi";
-import { Receita } from "../../types/reseita";
+
+import { Text } from "@mantine/core";
+import {
+  HL,
+  Titulo,
+  CardReceita,
+  Paginacao,
+  PesquisaLateral,
+} from "../../components";
 import { usePgPesquisaStyle } from "./style";
+
+import { pegarReceitaPorIngredientes, pegarReceitaPorNome } from "../../api";
+import { Receita } from "../../types/reseita";
 
 export const Pesquisa = () => {
   const { receita } = useParams();
@@ -16,6 +21,7 @@ export const Pesquisa = () => {
   const { classes } = usePgPesquisaStyle();
   let novaPesquisa = false;
 
+  // Nova page
   useEffect(() => {
     if (novaPesquisa) return;
 
@@ -48,6 +54,7 @@ export const Pesquisa = () => {
     }
   }, [global.paramFiltro.page]);
 
+  // Novos filtros, receita ou ingredientes
   useEffect(() => {
     novaPesquisa = true;
     global.paramFiltro.page = 1;
@@ -93,7 +100,7 @@ export const Pesquisa = () => {
 
       <div className={classes.resultadoPesquisaContainer}>
         <Titulo fontCaveat={false}>
-          Pesquisando: "<HL>{receita}</HL>"
+          Pesquisando: "<HL>{receita || "Por ingredientes"}</HL>"
         </Titulo>
 
         <Text className={classes.textoQTTotalReceitas} color="azul">
