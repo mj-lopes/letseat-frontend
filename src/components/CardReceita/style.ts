@@ -1,7 +1,7 @@
 import { createStyles } from "@mantine/core";
 import estrela from "../../assets/estrela.svg";
 
-export const useStyle = createStyles((theme, params) => {
+export const useStyle = createStyles((theme, params, ref) => {
   return {
     card: {
       flex: "1 1 300px",
@@ -11,6 +11,24 @@ export const useStyle = createStyles((theme, params) => {
 
       borderRadius: theme.radius.sm,
       boxShadow: theme.shadows.sm,
+      transition: ".3s",
+
+      ":hover": {
+        cursor: "pointer",
+        boxShadow: theme.shadows.md,
+      },
+
+      "& .mantine-Image-image": {
+        transition: ".3s",
+      },
+      "&:hover .mantine-Image-image": {
+        transform: "scale(1.2)",
+      },
+    },
+
+    imagemCard: {
+      height: "175px",
+      overflow: "hidden",
     },
 
     estrela: {
@@ -73,7 +91,7 @@ export const useStyle = createStyles((theme, params) => {
     detalhesContainer: {
       display: "flex",
       justifyContent: "center",
-      gap: "2rem",
+      gap: "3rem",
       padding: "6px 0",
     },
     detalhesItem: {

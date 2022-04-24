@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 
 import {
+  Anchor,
   Box,
   Card,
   CardSection,
@@ -10,12 +11,13 @@ import {
   Title,
 } from "@mantine/core";
 
-import { Receita } from "../../types/reseita";
+import { Receita } from "../../types/receita";
 
 import prato from "../../assets/prato.svg";
 import tempo from "../../assets/tempo.svg";
 
 import { useStyle } from "./style";
+import { Link } from "react-router-dom";
 
 interface ICard {
   receita: Receita;
@@ -25,8 +27,12 @@ const CD = ({ receita }: ICard) => {
   const { classes } = useStyle();
 
   return (
-    <Card className={classes.card}>
-      <CardSection>
+    <Card
+      className={classes.card}
+      component={Link}
+      to={`../receitas/receita/${receita._id}`}
+    >
+      <CardSection className={classes.imagemCard}>
         <Image
           src={receita.imgUrl}
           alt={receita.titulo}

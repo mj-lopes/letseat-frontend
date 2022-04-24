@@ -1,5 +1,5 @@
 export interface Receita {
-  id: string;
+  _id: string;
   titulo: string;
   categoria: string;
   classificacao: number;
