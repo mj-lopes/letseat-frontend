@@ -1,3 +1,5 @@
+import React, { memo } from "react";
+
 import {
   Box,
   Card,
@@ -7,8 +9,9 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import React, { memo } from "react";
+
 import { Receita } from "../../types/reseita";
+
 import prato from "../../assets/prato.svg";
 import tempo from "../../assets/tempo.svg";
 
@@ -40,25 +43,30 @@ const CD = ({ receita }: ICard) => {
       <Text className={classes.categoria}>{receita.categoria}</Text>
 
       <CardSection>
-        <Divider my="sm" className={classes.divisor} />
+        <Divider className={classes.divisor} sx={{ margin: "6px 0" }} />
       </CardSection>
 
-      <Box className={classes.detalhesContainer}>
-        <Box className={classes.detalhesItem}>
-          <img src={prato} alt={`Serve ${receita.rendimento}`} />
-          <Text>{receita.rendimento}</Text>
-        </Box>
+      <CardSection>
+        <Box className={classes.detalhesContainer}>
+          <Box className={classes.detalhesItem}>
+            <img src={prato} alt={`Serve ${receita.rendimento}`} />
+            <Text>{receita.rendimento}</Text>
+          </Box>
 
-        <Divider orientation="vertical" className={classes.divisor} />
-
-        <Box className={classes.detalhesItem}>
-          <img
-            src={tempo}
-            alt={`Tempo de preparo de ${receita.preparo} minutos`}
+          <Divider
+            orientation="vertical"
+            className={classes.divisor}
+            sx={{ height: "40px" }}
           />
-          <Text>{receita.preparo} MIN</Text>
+          <Box className={classes.detalhesItem}>
+            <img
+              src={tempo}
+              alt={`Tempo de preparo de ${receita.preparo} minutos`}
+            />
+            <Text>{receita.preparo} MIN</Text>
+          </Box>
         </Box>
-      </Box>
+      </CardSection>
     </Card>
   );
 };

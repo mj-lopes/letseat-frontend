@@ -5,7 +5,7 @@ export const usePgPesquisaStyle = createStyles((theme) => {
     pesquisaContainer: {
       minHeight: "100vh",
       display: "flex",
-      gap: "1rem",
+      gap: "3rem",
     },
     resultadoPesquisaContainer: {
       flex: "1",
@@ -21,9 +21,10 @@ export const usePgPesquisaStyle = createStyles((theme) => {
       fontWeight: "bold",
     },
     cardReceitasContainer: {
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fill, 300px)",
-      gap: "1rem",
+      display: "flex",
+      flexWrap: "wrap",
+      // gridTemplateColumns: "repeat(auto-fill, 400px)",
+      gap: "3rem",
       justifyContent: "space-between",
       marginBottom: "10rem",
     },

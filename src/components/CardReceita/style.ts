@@ -4,6 +4,7 @@ import estrela from "../../assets/estrela.svg";
 export const useStyle = createStyles((theme, params) => {
   return {
     card: {
+      flex: "1 1 300px",
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
@@ -73,6 +74,7 @@ export const useStyle = createStyles((theme, params) => {
       display: "flex",
       justifyContent: "center",
       gap: "2rem",
+      padding: "6px 0",
     },
     detalhesItem: {
       textAlign: "center",
