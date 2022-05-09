@@ -1,4 +1,10 @@
 import React, { createContext, useState } from "react";
+import { IReceita } from "../types/receita";
+
+export interface IBuscaReceitas {
+  total: number;
+  respostaQuery: IReceita[];
+}
 
 interface IGlobalStorage {
   listaIngredientes: string[];
@@ -19,18 +25,12 @@ interface IGlobalStorage {
   ) => void;
 
   loading: boolean;
-  dados: { total: number; respostaQuery: [] };
   erro: any;
-  fetchDados: (url: string, options: {}) => Promise<void>;
+  fetchDados: (url: string, options: {}) => Promise<IBuscaReceitas | IReceita>;
 }
 
 interface IGlobalStorageChildren {
   children: React.ReactNode;
-}
-
-interface IdadosFetch {
-  total: number;
-  respostaQuery: [];
 }
 
 export const GlobalContext = createContext<IGlobalStorage>(
@@ -40,7 +40,6 @@ export const GlobalContext = createContext<IGlobalStorage>(
 export const GlobalStorage = ({ children }: IGlobalStorageChildren) => {
   const [listaIngredientes, setListaIngredientes] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [dados, setDados] = useState({} as IdadosFetch);
   const [erro, setErro] = useState<string>("");
 
   const [tipoPesquisa, setTipoPesquisa] = useState<"receita" | "ingredientes">(
@@ -74,13 +73,10 @@ export const GlobalStorage = ({ children }: IGlobalStorageChildren) => {
   const fetchDados = async (url: string, options: {}) => {
     try {
       setLoading(true);
-      console.log(url, options);
 
       const dados = await fetch(url, options).then((r) => r.json());
 
-      console.log(dados);
-
-      setDados(dados);
+      return dados;
     } catch (error: any) {
       setErro(error);
     } finally {
@@ -109,7 +105,6 @@ export const GlobalStorage = ({ children }: IGlobalStorageChildren) => {
         selecionarTipoPesquisa,
         alterarCampoFiltro,
         loading,
-        dados,
         erro,
         fetchDados,
       }}

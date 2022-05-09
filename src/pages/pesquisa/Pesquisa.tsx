@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { GlobalContext } from "../../contextApi";
+import { GlobalContext, IBuscaReceitas } from "../../contextApi";
 
 import { Text } from "@mantine/core";
 import {
@@ -13,12 +13,13 @@ import {
 import { usePgPesquisaStyle } from "./style";
 
 import { pegarReceitaPorIngredientes, pegarReceitaPorNome } from "../../api";
-import { Receita } from "../../types/reseita";
+import { IReceita } from "../../types/receita";
 
 export const Pesquisa = () => {
   const { receita } = useParams();
   const global = useContext(GlobalContext);
   const { classes } = usePgPesquisaStyle();
+  const [data, setData] = useState<IBuscaReceitas>({} as IBuscaReceitas);
   let novaPesquisa = false;
 
   // Nova page
@@ -37,7 +38,10 @@ export const Pesquisa = () => {
       );
 
       (async function () {
-        await global.fetchDados(url, options);
+        const resposta = await global.fetchDados(url, options);
+        if ("total" in resposta) {
+          setData(resposta);
+        }
       })();
     } else {
       const { url, options } = pegarReceitaPorIngredientes(
@@ -49,7 +53,10 @@ export const Pesquisa = () => {
       );
 
       (async function () {
-        await global.fetchDados(url, options);
+        const resposta = await global.fetchDados(url, options);
+        if ("total" in resposta) {
+          setData(resposta);
+        }
       })();
     }
   }, [global.paramFiltro.page]);
@@ -70,7 +77,10 @@ export const Pesquisa = () => {
       );
 
       (async function () {
-        await global.fetchDados(url, options);
+        const resposta = await global.fetchDados(url, options);
+        if ("total" in resposta) {
+          setData(resposta);
+        }
       })();
     } else {
       const { url, options } = pegarReceitaPorIngredientes(
@@ -82,7 +92,10 @@ export const Pesquisa = () => {
       );
 
       (async function () {
-        await global.fetchDados(url, options);
+        const resposta = await global.fetchDados(url, options);
+        if ("total" in resposta) {
+          setData(resposta);
+        }
       })();
     }
     novaPesquisa = false;
@@ -104,17 +117,17 @@ export const Pesquisa = () => {
         </Titulo>
 
         <Text className={classes.textoQTTotalReceitas} color="azul">
-          <HL>{global.dados.total}</HL> RECEITAS ENCONTRADAS
+          <HL>{data.total}</HL> RECEITAS ENCONTRADAS
         </Text>
 
         <div className={classes.cardReceitasContainer}>
-          {global.dados.respostaQuery?.map((res: Receita) => (
+          {data.respostaQuery?.map((res: IReceita) => (
             <CardReceita receita={res} key={`receita - ${res.titulo}`} />
           ))}
         </div>
 
         <Paginacao
-          total={Math.ceil(global.dados.total / global.paramFiltro.limite) || 1}
+          total={Math.ceil(data.total / global.paramFiltro.limite) || 1}
         />
       </div>
     </div>

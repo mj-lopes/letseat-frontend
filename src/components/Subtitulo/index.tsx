@@ -3,14 +3,14 @@ import { memo } from "react";
 import { useStyles } from "./style";
 
 interface ITitulo extends TitleProps {
-  texto: string;
+  children: string;
   decoracaoLatel?: boolean;
   sombra?: boolean;
   cor?: "azul" | "vermelho" | "branco";
 }
 
 export const componenteSubtitulo = ({
-  texto,
+  children,
   decoracaoLatel = false,
   sombra = false,
   cor = "azul",
@@ -20,7 +20,7 @@ export const componenteSubtitulo = ({
 
   return (
     <Title className={classes.titulo} {...props}>
-      {texto}
+      {children}
     </Title>
   );
 };

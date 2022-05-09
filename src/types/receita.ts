@@ -1,4 +1,4 @@
-export interface Receita {
+export interface IReceita {
   _id: string;
   titulo: string;
   categoria: string;
