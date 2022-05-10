@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Box, Card, Group, Image, List, ListItem, Text } from "@mantine/core";
 import { Subtitulo, Titulo } from "../../components";
 
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { GlobalContext } from "../../contextApi";
 import { pegarReceitaPorID } from "../../api";
@@ -45,19 +45,29 @@ export const Receita = () => {
         height="100vh"
         width="30vw"
         sx={{ alignSelf: "center" }}
+        radius="sm"
       />
 
       <Card className={classes.containerReceita}>
         <div className={classes.conteudoReceita}>
           <div className={classes.cardHeader}>
             <div>
-              <Subtitulo>{data.categoria}</Subtitulo>
+              <Subtitulo>
+                <Text
+                  component={Link}
+                  to={`../categoria/${data.categoria?.split(" ").join("+")}`}
+                  size="xl"
+                >
+                  {data.categoria}
+                </Text>
+              </Subtitulo>
             </div>
             <div className={classes.caracteristicas}>
               <div>
                 <img
                   src={estrela}
                   alt={`Classificação: ${data.classificacao} de 5 estrelas`}
+                  style={{ width: "20px" }}
                 />
                 <Text>{data.classificacao}</Text>
               </div>

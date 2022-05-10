@@ -1,9 +1,9 @@
 import { Title, TitleProps } from "@mantine/core";
-import { memo } from "react";
+import { memo, ReactNode } from "react";
 import { useStyles } from "./style";
 
 interface ITitulo extends TitleProps {
-  children: string;
+  children: ReactNode;
   decoracaoLatel?: boolean;
   sombra?: boolean;
   cor?: "azul" | "vermelho" | "branco";
