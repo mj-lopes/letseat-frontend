@@ -18,9 +18,9 @@ const useStyles = createStyles((theme, params, getRef) => {
       // -80
       margin: "auto",
 
-      height: "50px",
+      height: "60px",
       // 60
-      maxWidth: "120px",
+      maxWidth: "130px",
       // 110
       background: CORBG,
       borderRadius: "0px 0px 60px 60px",
