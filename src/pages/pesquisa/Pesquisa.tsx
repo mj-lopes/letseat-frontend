@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { GlobalContext, IBuscaReceitas } from "../../contextApi";
 
 import { Text } from "@mantine/core";
@@ -16,11 +16,18 @@ import { pegarReceitaPorIngredientes, pegarReceitaPorNome } from "../../api";
 import { IReceita } from "../../types/receita";
 
 export const Pesquisa = () => {
+  const navigator = useNavigate();
+
   const { receita } = useParams();
+  const [searchParam] = useSearchParams();
+  const page = Number.parseInt(searchParam.get("page") || "1");
+
   const global = useContext(GlobalContext);
   const { classes } = usePgPesquisaStyle();
   const [data, setData] = useState<IBuscaReceitas>({} as IBuscaReceitas);
+
   let novaPesquisa = false;
+  let pesquisaInicial = false;
 
   // Nova page
   useEffect(() => {
@@ -43,6 +50,8 @@ export const Pesquisa = () => {
           setData(resposta);
         }
       })();
+
+      navigator(`../pesquisa/${receita}?page=${global.paramFiltro.page}`);
     } else {
       const { url, options } = pegarReceitaPorIngredientes(
         global.paramFiltro.page,
@@ -58,13 +67,17 @@ export const Pesquisa = () => {
           setData(resposta);
         }
       })();
+
+      navigator(`../pesquisa/ingredientes?page=${global.paramFiltro.page}`);
     }
   }, [global.paramFiltro.page]);
 
-  // Novos filtros, receita ou ingredientes
   useEffect(() => {
+    if (pesquisaInicial) return;
     novaPesquisa = true;
-    global.paramFiltro.page = 1;
+
+    global.alterarCampoFiltro("page", 1);
+
     if (receita) {
       const nomeReceita = receita.split(" ").join("+");
 
@@ -82,6 +95,8 @@ export const Pesquisa = () => {
           setData(resposta);
         }
       })();
+
+      navigator(`../pesquisa/${receita}?page=${global.paramFiltro.page}`);
     } else {
       const { url, options } = pegarReceitaPorIngredientes(
         global.paramFiltro.page,
@@ -97,15 +112,61 @@ export const Pesquisa = () => {
           setData(resposta);
         }
       })();
+
+      navigator(`../pesquisa/ingredientes?page=${global.paramFiltro.page}`);
     }
     novaPesquisa = false;
   }, [
-    receita,
-    global.listaIngredientes,
     global.paramFiltro.limite,
     global.paramFiltro.estrela,
     global.paramFiltro.tempoPreparo,
   ]);
+
+  // Novos filtros, receita ou ingredientes
+  useEffect(() => {
+    novaPesquisa = true; // Evitar o efeito de page
+    pesquisaInicial = true; // Evitar o efeito de filtro
+
+    global.alterarCampoFiltro("page", page);
+    if (receita) {
+      const nomeReceita = receita.split(" ").join("+");
+      const { url, options } = pegarReceitaPorNome(
+        page,
+        global.paramFiltro.limite,
+        global.paramFiltro.estrela,
+        global.paramFiltro.tempoPreparo,
+        nomeReceita,
+      );
+
+      (async function () {
+        const resposta = await global.fetchDados(url, options);
+        if ("total" in resposta) {
+          setData(resposta);
+        }
+      })();
+
+      navigator(`../pesquisa/${receita}?page=${global.paramFiltro.page}`);
+    } else {
+      const { url, options } = pegarReceitaPorIngredientes(
+        global.paramFiltro.page,
+        global.paramFiltro.limite,
+        global.paramFiltro.estrela,
+        global.paramFiltro.tempoPreparo,
+        global.listaIngredientes,
+      );
+
+      (async function () {
+        const resposta = await global.fetchDados(url, options);
+        if ("total" in resposta) {
+          setData(resposta);
+        }
+      })();
+
+      navigator(`../pesquisa/ingredientes?page=${global.paramFiltro.page}`);
+    }
+    novaPesquisa = false;
+    pesquisaInicial = false;
+  }, [receita, global.listaIngredientes]);
 
   return (
     <div className={classes.pesquisaContainer}>

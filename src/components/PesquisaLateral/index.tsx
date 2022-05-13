@@ -22,32 +22,9 @@ const Pesquisa = () => {
 
   const handleSubmitPesquisa = () => {
     if (global.tipoPesquisa === "ingredientes") {
-      navigator(`/pesquisa/ingredientes`);
-      // try {
-      //   const { url, options } = pegarReceitaPorIngredientes(
-      //     1,
-      //     12,
-      //     4,
-      //     90,
-      //     global.listaIngredientes,
-      //   );
-
-      //   await global.fetchDados(url, options);
-
-      //   console.log(global.dados);
-      // } catch (err) {
-      //   console.log(err);
-      // }
+      navigator(`/pesquisa/ingredientes?page=1`);
     } else {
-      navigator(`/pesquisa/${input}`);
-
-      // try {
-      //   const { url, options } = pegarReceitaPorNome(1, 12, 4, 90, input);
-      //   const resp = await fetch(url, options).then((resp) => resp.json());
-      //   console.log(resp);
-      // } catch (err) {
-      //   console.error(err);
-      // }
+      navigator(`/pesquisa/${input}?page=1`);
     }
   };
 
