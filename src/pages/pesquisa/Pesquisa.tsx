@@ -12,13 +12,18 @@ import {
 } from "../../components";
 import { usePgPesquisaStyle } from "./style";
 
-import { pegarReceitaPorIngredientes, pegarReceitaPorNome } from "../../api";
+import {
+  pegarReceitaPorIngredientes,
+  pegarReceitaPorNome,
+  pegarReceitaPorCategoria,
+} from "../../api";
 import { IReceita } from "../../types/receita";
 
 export const Pesquisa = () => {
   const navigator = useNavigate();
 
   const { receita } = useParams();
+  const { categoria } = useParams();
   const [searchParam] = useSearchParams();
   const page = Number.parseInt(searchParam.get("page") || "1");
 
@@ -52,6 +57,26 @@ export const Pesquisa = () => {
       })();
 
       navigator(`../pesquisa/${receita}?page=${global.paramFiltro.page}`);
+    } else if (categoria) {
+      const { url, options } = pegarReceitaPorCategoria(
+        global.paramFiltro.page,
+        global.paramFiltro.limite,
+        global.paramFiltro.estrela,
+        global.paramFiltro.tempoPreparo,
+        categoria,
+      );
+
+      (async function () {
+        const resposta = await global.fetchDados(url, options);
+        if ("total" in resposta) {
+          setData(resposta);
+        }
+        console.log(resposta);
+      })();
+
+      navigator(
+        `../pesquisa/categorias/${categoria}?page=${global.paramFiltro.page}`,
+      );
     } else {
       const { url, options } = pegarReceitaPorIngredientes(
         global.paramFiltro.page,
@@ -97,6 +122,26 @@ export const Pesquisa = () => {
       })();
 
       navigator(`../pesquisa/${receita}?page=${global.paramFiltro.page}`);
+    } else if (categoria) {
+      const { url, options } = pegarReceitaPorCategoria(
+        page,
+        global.paramFiltro.limite,
+        global.paramFiltro.estrela,
+        global.paramFiltro.tempoPreparo,
+        categoria,
+      );
+
+      (async function () {
+        const resposta = await global.fetchDados(url, options);
+        if ("total" in resposta) {
+          setData(resposta);
+        }
+        console.log(resposta);
+      })();
+
+      navigator(
+        `../pesquisa/categorias/${categoria}?page=${global.paramFiltro.page}`,
+      );
     } else {
       const { url, options } = pegarReceitaPorIngredientes(
         global.paramFiltro.page,
@@ -146,6 +191,27 @@ export const Pesquisa = () => {
       })();
 
       navigator(`../pesquisa/${receita}?page=${global.paramFiltro.page}`);
+    } else if (categoria) {
+      const { url, options } = pegarReceitaPorCategoria(
+        page,
+        global.paramFiltro.limite,
+        global.paramFiltro.estrela,
+        global.paramFiltro.tempoPreparo,
+        categoria,
+      );
+      console.log(url);
+
+      (async function () {
+        const resposta = await global.fetchDados(url, options);
+        if ("total" in resposta) {
+          setData(resposta);
+        }
+        console.log(resposta);
+      })();
+
+      navigator(
+        `../pesquisa/categorias/${categoria}?page=${global.paramFiltro.page}`,
+      );
     } else {
       const { url, options } = pegarReceitaPorIngredientes(
         global.paramFiltro.page,
@@ -164,6 +230,7 @@ export const Pesquisa = () => {
 
       navigator(`../pesquisa/ingredientes?page=${global.paramFiltro.page}`);
     }
+
     novaPesquisa = false;
     pesquisaInicial = false;
   }, [receita, global.listaIngredientes]);
@@ -174,7 +241,7 @@ export const Pesquisa = () => {
 
       <div className={classes.resultadoPesquisaContainer}>
         <Titulo fontCaveat={false}>
-          Pesquisando: "<HL>{receita || "Por ingredientes"}</HL>"
+          Pesquisando: "<HL>{receita || categoria || "Por ingredientes"}</HL>"
         </Titulo>
 
         <Text className={classes.textoQTTotalReceitas} color="azul">

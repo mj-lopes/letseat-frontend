@@ -55,7 +55,9 @@ export const Receita = () => {
               <Subtitulo>
                 <Text
                   component={Link}
-                  to={`../categoria/${data.categoria?.split(" ").join("+")}`}
+                  to={`../pesquisa/categorias/${data.categoria
+                    ?.split(" ")
+                    .join("+")}`}
                   size="xl"
                 >
                   {data.categoria}
