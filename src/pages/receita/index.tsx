@@ -1,6 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { Box, Card, Group, Image, List, ListItem, Text } from "@mantine/core";
+import {
+  Box,
+  Card,
+  Divider,
+  Group,
+  Image,
+  List,
+  ListItem,
+  Text,
+} from "@mantine/core";
 import { Subtitulo, Titulo } from "../../components";
 
 import { Link, useParams } from "react-router-dom";
@@ -91,6 +100,8 @@ export const Receita = () => {
               </div>
             </div>
           </div>
+
+          <Divider orientation="horizontal" sx={{ margin: ".5rem 0 2rem 0" }} />
 
           <Titulo decoracaoLatel align="center" cor="vermelho">
             {data?.titulo}
