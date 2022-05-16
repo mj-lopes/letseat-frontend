@@ -30,11 +30,30 @@ export const Pesquisa = () => {
   const global = useContext(GlobalContext);
   const { classes } = usePgPesquisaStyle();
   const [data, setData] = useState<IBuscaReceitas>({} as IBuscaReceitas);
+  const [erro, setErro] = useState<any>("");
 
   let novaPesquisa = false;
   let pesquisaInicial = false;
 
-  // Nova page
+  const TITULO = receita
+    ? receita
+    : categoria
+    ? `Categoria: ${categoria.split("+").join(" ")}`
+    : "Ingredientes";
+
+  async function fetchDadosApi(url: string, options: object) {
+    try {
+      const resposta = await global.fetchDados(url, options);
+
+      if (resposta && "total" in resposta) {
+        setData(resposta);
+      }
+    } catch (erro) {
+      setErro(erro);
+    }
+  }
+
+  // Fetch de novas páginas
   useEffect(() => {
     if (novaPesquisa) return;
 
@@ -49,12 +68,7 @@ export const Pesquisa = () => {
         nomeReceita,
       );
 
-      (async function () {
-        const resposta = await global.fetchDados(url, options);
-        if ("total" in resposta) {
-          setData(resposta);
-        }
-      })();
+      fetchDadosApi(url, options);
 
       navigator(`../pesquisa/${receita}?page=${global.paramFiltro.page}`);
     } else if (categoria) {
@@ -66,13 +80,7 @@ export const Pesquisa = () => {
         categoria,
       );
 
-      (async function () {
-        const resposta = await global.fetchDados(url, options);
-        if ("total" in resposta) {
-          setData(resposta);
-        }
-        console.log(resposta);
-      })();
+      fetchDadosApi(url, options);
 
       navigator(
         `../pesquisa/categorias/${categoria}?page=${global.paramFiltro.page}`,
@@ -86,17 +94,13 @@ export const Pesquisa = () => {
         global.listaIngredientes,
       );
 
-      (async function () {
-        const resposta = await global.fetchDados(url, options);
-        if ("total" in resposta) {
-          setData(resposta);
-        }
-      })();
+      fetchDadosApi(url, options);
 
       navigator(`../pesquisa/ingredientes?page=${global.paramFiltro.page}`);
     }
   }, [global.paramFiltro.page]);
 
+  // Fetch ao realizar a alteração de algum filtro de busca
   useEffect(() => {
     if (pesquisaInicial) return;
     novaPesquisa = true;
@@ -114,12 +118,7 @@ export const Pesquisa = () => {
         nomeReceita,
       );
 
-      (async function () {
-        const resposta = await global.fetchDados(url, options);
-        if ("total" in resposta) {
-          setData(resposta);
-        }
-      })();
+      fetchDadosApi(url, options);
 
       navigator(`../pesquisa/${receita}?page=${global.paramFiltro.page}`);
     } else if (categoria) {
@@ -131,13 +130,7 @@ export const Pesquisa = () => {
         categoria,
       );
 
-      (async function () {
-        const resposta = await global.fetchDados(url, options);
-        if ("total" in resposta) {
-          setData(resposta);
-        }
-        console.log(resposta);
-      })();
+      fetchDadosApi(url, options);
 
       navigator(
         `../pesquisa/categorias/${categoria}?page=${global.paramFiltro.page}`,
@@ -151,12 +144,7 @@ export const Pesquisa = () => {
         global.listaIngredientes,
       );
 
-      (async function () {
-        const resposta = await global.fetchDados(url, options);
-        if ("total" in resposta) {
-          setData(resposta);
-        }
-      })();
+      fetchDadosApi(url, options);
 
       navigator(`../pesquisa/ingredientes?page=${global.paramFiltro.page}`);
     }
@@ -167,10 +155,10 @@ export const Pesquisa = () => {
     global.paramFiltro.tempoPreparo,
   ]);
 
-  // Novos filtros, receita ou ingredientes
+  // Fetch inicial ao entrar no componente e ao alterar os paramêtros de busca
   useEffect(() => {
-    novaPesquisa = true; // Evitar o efeito de page
-    pesquisaInicial = true; // Evitar o efeito de filtro
+    novaPesquisa = true; // Evitar o efeito de paginacao inicial
+    pesquisaInicial = true; // Evitar o efeito de filtro inicial
 
     global.alterarCampoFiltro("page", page);
     if (receita) {
@@ -183,12 +171,7 @@ export const Pesquisa = () => {
         nomeReceita,
       );
 
-      (async function () {
-        const resposta = await global.fetchDados(url, options);
-        if ("total" in resposta) {
-          setData(resposta);
-        }
-      })();
+      fetchDadosApi(url, options);
 
       navigator(`../pesquisa/${receita}?page=${global.paramFiltro.page}`);
     } else if (categoria) {
@@ -199,15 +182,8 @@ export const Pesquisa = () => {
         global.paramFiltro.tempoPreparo,
         categoria,
       );
-      console.log(url);
 
-      (async function () {
-        const resposta = await global.fetchDados(url, options);
-        if ("total" in resposta) {
-          setData(resposta);
-        }
-        console.log(resposta);
-      })();
+      fetchDadosApi(url, options);
 
       navigator(
         `../pesquisa/categorias/${categoria}?page=${global.paramFiltro.page}`,
@@ -221,12 +197,7 @@ export const Pesquisa = () => {
         global.listaIngredientes,
       );
 
-      (async function () {
-        const resposta = await global.fetchDados(url, options);
-        if ("total" in resposta) {
-          setData(resposta);
-        }
-      })();
+      fetchDadosApi(url, options);
 
       navigator(`../pesquisa/ingredientes?page=${global.paramFiltro.page}`);
     }
@@ -241,7 +212,7 @@ export const Pesquisa = () => {
 
       <div className={classes.resultadoPesquisaContainer}>
         <Titulo fontCaveat={false}>
-          Pesquisando: "<HL>{receita || categoria || "Por ingredientes"}</HL>"
+          Pesquisando: "<HL>{TITULO}</HL>"
         </Titulo>
 
         <Text className={classes.textoQTTotalReceitas} color="azul">
