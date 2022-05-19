@@ -32,19 +32,26 @@ export const Pesquisa = () => {
   const { classes } = usePgPesquisaStyle();
   const [data, setData] = useState<IBuscaReceitas>({} as IBuscaReceitas);
   const [erro, setErro] = useState<any>("");
+  const [buscaSemResultado, setBuscaSemResultado] = useState<string>("");
 
   let novaPesquisa = false;
   let pesquisaInicial = false;
 
-  const TITULO = receita
+  const TITULO = categoria
+    ? categoria.split("+").join(" ")
+    : receita
     ? receita
-    : categoria
-    ? `Categoria: ${categoria.split("+").join(" ")}`
     : "Ingredientes";
 
   async function fetchDadosApi(url: string, options: object) {
     try {
+      setBuscaSemResultado("");
+
       const resposta = await global.fetchDados(url, options);
+
+      if (!resposta) {
+        setBuscaSemResultado("Sem resultados encontrados");
+      }
 
       if (resposta && "total" in resposta) {
         setData(resposta);
@@ -215,7 +222,8 @@ export const Pesquisa = () => {
 
         <div className={classes.resultadoPesquisaContainer}>
           <Titulo fontCaveat={false}>
-            Pesquisando: "<HL>{TITULO}</HL>"
+            {categoria ? "Categoria: " : "Pesquisando: "}
+            <HL>{TITULO}</HL>
           </Titulo>
 
           <Text className={classes.textoQTTotalReceitas} color="azul">
