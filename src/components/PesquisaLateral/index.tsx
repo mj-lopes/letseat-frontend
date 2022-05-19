@@ -30,7 +30,9 @@ const Pesquisa = () => {
 
   return (
     <aside className={classes.aside}>
-      <Subtitulo texto="Pesquise" decoracaoLatel cor="vermelho" />
+      <Subtitulo decoracaoLatel cor="vermelho">
+        Pesquise
+      </Subtitulo>
 
       <RadioGroup
         color={"vermelho"}
@@ -81,7 +83,9 @@ const Pesquisa = () => {
         </Botao>
       </Box>
 
-      <Subtitulo texto="Filtros" decoracaoLatel cor="vermelho" my="md" />
+      <Subtitulo decoracaoLatel cor="vermelho" my="md">
+        Filtros
+      </Subtitulo>
 
       <Text weight="bold" color="azul">
         Tempo máximo
