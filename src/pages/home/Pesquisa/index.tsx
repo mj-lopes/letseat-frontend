@@ -6,9 +6,6 @@ import { GlobalContext } from "../../../contextApi";
 import { useStyles } from "./style";
 
 export const Pesquisa = () => {
-  const [tipoPesquisa, setTipoPesquisa] = useState<"receita" | "ingredientes">(
-    "receita",
-  );
   const [pesquisa, setPesquisa] = useState("");
   const { classes } = useStyles();
   const navigator = useNavigate();
@@ -31,7 +28,7 @@ export const Pesquisa = () => {
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
-    if (tipoPesquisa === "ingredientes") {
+    if (global.tipoPesquisa === "ingredientes") {
       navigator("/pesquisa/ingredientes");
     } else {
       navigator(`/pesquisa/${pesquisa}`);
@@ -42,8 +39,10 @@ export const Pesquisa = () => {
     <Box className={classes.containerPesquisa}>
       <RadioGroup
         label={<Text weight="bold">Pesquisar por:</Text>}
-        value={tipoPesquisa}
-        onChange={(e: "receita" | "ingredientes") => setTipoPesquisa(e)}
+        value={global.tipoPesquisa}
+        onChange={(e: "receita" | "ingredientes") =>
+          global.selecionarTipoPesquisa(e)
+        }
         color={"vermelho"}
         mb="md"
       >
@@ -60,7 +59,7 @@ export const Pesquisa = () => {
             value={pesquisa}
             sx={{ flex: "1" }}
           />
-          {tipoPesquisa === "ingredientes" ? (
+          {global.tipoPesquisa === "ingredientes" ? (
             <Botao
               cor={"vermelho"}
               uppercase
@@ -77,7 +76,7 @@ export const Pesquisa = () => {
         </Box>
       </form>
 
-      {tipoPesquisa === "ingredientes" ? (
+      {global.tipoPesquisa === "ingredientes" ? (
         <BadgeIngrediente
           ingredientes={global.listaIngredientes}
           onClick={handlerRemoveIngrediente}
