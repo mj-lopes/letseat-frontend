@@ -38,9 +38,9 @@ export const Pesquisa = () => {
     e.preventDefault();
 
     if (tipoPesquisa === "ingredientes") {
-      navigator("/ingredientes");
+      navigator("/pesquisa/ingredientes");
     } else {
-      navigator(`/${pesquisa}`);
+      navigator(`/pesquisa/${pesquisa}`);
     }
   };
 
