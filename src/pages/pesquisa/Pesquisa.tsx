@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { GlobalContext, IBuscaReceitas } from "../../contextApi";
+import panelaVazia from "../../assets/panelaVazia.svg";
 
-import { Text } from "@mantine/core";
+import { Image, Text } from "@mantine/core";
 import {
   HL,
   Titulo,
@@ -213,6 +214,29 @@ export const Pesquisa = () => {
     novaPesquisa = false;
     pesquisaInicial = false;
   }, [receita, global.listaIngredientes]);
+
+  if (buscaSemResultado) {
+    return (
+      <>
+        <Loading carregando={global.loading} />
+        <div className={classes.pesquisaContainer}>
+          <PesquisaLateral />
+
+          <div className={classes.tituloSemResultadoDeBusca}>
+            <Image
+              src={panelaVazia}
+              className={classes.imgBuscaSemResultado}
+              width="150px"
+            />
+            <Titulo fontCaveat={false}>
+              Não foi encontrado nenhum resultado para a busca:{" "}
+              <HL>{TITULO}</HL>
+            </Titulo>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

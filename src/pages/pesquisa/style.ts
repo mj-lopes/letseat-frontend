@@ -28,5 +28,16 @@ export const usePgPesquisaStyle = createStyles((theme) => {
       justifyContent: "space-between",
       marginBottom: "10rem",
     },
+
+    tituloSemResultadoDeBusca: {
+      marginTop: "6rem",
+      textAlign: "center",
+    },
+
+    imgBuscaSemResultado: {
+      display: "flex",
+      justifyContent: "center",
+      marginTop: "3rem",
+    },
   };
 });
