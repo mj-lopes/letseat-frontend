@@ -16,19 +16,13 @@ export const Pesquisa = () => {
 
   const handlerRemoveIngrediente = (el: string) => {
     const ingrediente = el.toLocaleLowerCase();
-    const newArrIngredientes =
-      global?.listaIngredientes.filter((el) => el !== ingrediente) || [];
-
-    global?.setListaIngredientes(newArrIngredientes);
+    global.removerIngrediente(ingrediente);
   };
 
   const handlerAdicionaIngrediente = () => {
     if (!global?.listaIngredientes.includes(pesquisa)) {
       const novoIngrediente = pesquisa.toLocaleLowerCase().trim();
-      global?.setListaIngredientes((prevValue) => [
-        ...prevValue,
-        novoIngrediente,
-      ]);
+      global.addIngrediente(novoIngrediente);
     }
 
     setPesquisa("");
@@ -84,16 +78,10 @@ export const Pesquisa = () => {
       </form>
 
       {tipoPesquisa === "ingredientes" ? (
-        <Box className={classes.containerBadgers} mt="lg">
-          {global?.listaIngredientes.map((el) => (
-            <BadgeIngrediente
-              onClick={() => handlerRemoveIngrediente(el)}
-              key={el}
-            >
-              {el}
-            </BadgeIngrediente>
-          ))}
-        </Box>
+        <BadgeIngrediente
+          ingredientes={global.listaIngredientes}
+          onClick={handlerRemoveIngrediente}
+        />
       ) : (
         ""
       )}
