@@ -9,6 +9,7 @@ import {
   CardReceita,
   Paginacao,
   PesquisaLateral,
+  Loading,
 } from "../../components";
 import { usePgPesquisaStyle } from "./style";
 
@@ -207,28 +208,31 @@ export const Pesquisa = () => {
   }, [receita, global.listaIngredientes]);
 
   return (
-    <div className={classes.pesquisaContainer}>
-      <PesquisaLateral />
+    <>
+      <Loading carregando={global.loading} />
+      <div className={classes.pesquisaContainer}>
+        <PesquisaLateral />
 
-      <div className={classes.resultadoPesquisaContainer}>
-        <Titulo fontCaveat={false}>
-          Pesquisando: "<HL>{TITULO}</HL>"
-        </Titulo>
+        <div className={classes.resultadoPesquisaContainer}>
+          <Titulo fontCaveat={false}>
+            Pesquisando: "<HL>{TITULO}</HL>"
+          </Titulo>
 
-        <Text className={classes.textoQTTotalReceitas} color="azul">
-          <HL>{data.total}</HL> RECEITAS ENCONTRADAS
-        </Text>
+          <Text className={classes.textoQTTotalReceitas} color="azul">
+            <HL>{data.total}</HL> RECEITAS ENCONTRADAS
+          </Text>
 
-        <div className={classes.cardReceitasContainer}>
-          {data.respostaQuery?.map((res: IReceita) => (
-            <CardReceita receita={res} key={`receita - ${res.titulo}`} />
-          ))}
+          <div className={classes.cardReceitasContainer}>
+            {data.respostaQuery?.map((res: IReceita) => (
+              <CardReceita receita={res} key={`receita - ${res.titulo}`} />
+            ))}
+          </div>
+
+          <Paginacao
+            total={Math.ceil(data.total / global.paramFiltro.limite) || 1}
+          />
         </div>
-
-        <Paginacao
-          total={Math.ceil(data.total / global.paramFiltro.limite) || 1}
-        />
       </div>
-    </div>
+    </>
   );
 };

@@ -1,0 +1,87 @@
+/* export const ativo = keyframes({
+  from: {
+    opacity: ".8",
+    top: "-100vh",
+  },
+  to: {
+    opacity: "1",
+    top: "0",
+  },
+});
+
+export const desativo = keyframes({
+  from: {
+    opacity: "1",
+    top: "0",
+  },
+  to: {
+    opacity: "0",
+    top: "-100vh",
+  },
+}); */
+
+.bgvermelho-enter {
+  opacity: 0;
+  top: -100vh;
+}
+
+.bgvermelho-enter-active {
+  opacity: 1;
+  top: 0;
+  transition: top 0.3s, opacity 0.3s;
+}
+
+.bgvermelho-exit {
+  opacity: 1;
+  top: 0;
+}
+
+.bgvermelho-exit-active {
+  opacity: 0;
+  top: -100vh;
+  transition: top 0.9s, opacity 0.9s;
+}
+
+.bgazul-enter {
+  opacity: 0;
+  top: -100vh;
+}
+
+.bgazul-enter-active {
+  opacity: 1;
+  top: 0;
+  transition: top 0.6s, opacity 0.6s;
+}
+
+.bgazul-exit {
+  opacity: 1;
+  top: 0;
+}
+
+.bgazul-exit-active {
+  opacity: 0;
+  top: -100vh;
+  transition: top 0.6s, opacity 0.6s;
+}
+
+.bgbege-enter {
+  opacity: 0;
+  top: -100vh;
+}
+
+.bgbege-enter-active {
+  opacity: 1;
+  top: 0;
+  transition: top 0.9s, opacity 0.9s;
+}
+
+.bgbege-exit {
+  opacity: 1;
+  top: 0;
+}
+
+.bgbege-exit-active {
+  opacity: 0;
+  top: -100vh;
+  transition: top 0.3s, opacity 0.3s;
+}
