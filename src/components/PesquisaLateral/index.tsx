@@ -11,17 +11,16 @@ import {
 
 import { GlobalContext } from "../../contextApi";
 import { useStyles } from "./style";
-import { pegarReceitaPorIngredientes, pegarReceitaPorNome } from "../../api";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "@mantine/hooks";
 
 const Pesquisa = () => {
   const [input, setInput] = useState("");
-  const [drawerEstaAberto, setDrawerEstaAberto] = useState(true);
+  const [drawerEstaAberto, setDrawerEstaAberto] = useState(false);
   const global = useContext(GlobalContext);
 
   const screenMobile = useMediaQuery("(max-width: 900px)");
-  const { classes } = useStyles();
+  const { classes } = useStyles({ mobile: screenMobile });
 
   const navigator = useNavigate();
 
