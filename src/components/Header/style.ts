@@ -1,35 +1,30 @@
 import { createStyles } from "@mantine/core";
 
-const CORBG = "rgba(0, 43, 66, 0.95)";
-
 const useStyles = createStyles((theme, params, getRef) => {
   return {
     background: {
       zIndex: 1000,
-      height: "70px",
-      // 80
-      backgroundColor: CORBG,
+      height: "60px",
+      backgroundColor: theme.fn.rgba(theme.colors.azul[4], 0.95),
       position: "fixed",
       width: "100%",
     },
     semiCirculo: {
       position: "relative",
-      bottom: "-70px",
-      // -80
+      bottom: "-60px",
       margin: "auto",
+      height: "45px",
+      maxWidth: "110px",
 
-      height: "60px",
-      // 60
-      maxWidth: "130px",
-      // 110
-      background: CORBG,
-      borderRadius: "0px 0px 60px 60px",
+      background: theme.fn.rgba(theme.colors.azul[4], 0.95),
+
+      borderRadius: "0px 0px 45px 45px",
     },
 
     logo: {
       textAlign: "center",
       position: "relative",
-      top: "-70px",
+      top: "-65px",
     },
   };
 });
