@@ -2,6 +2,9 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useLoadingStyle } from "./style";
 import { CSSTransition } from "react-transition-group";
 
+import logomarca from "../../assets/logomarca.png";
+import detalhes from "../../assets/detalhes.png";
+
 import "./style.css";
 
 export const Loading = ({ carregando }: { carregando: boolean }) => {
@@ -54,7 +57,10 @@ export const Loading = ({ carregando }: { carregando: boolean }) => {
         unmountOnExit
         mountOnEnter
       >
-        <div className={classes.BgBage}></div>
+        <div className={classes.BgBage}>
+          <img src={logomarca} alt="" className={classes.logo} />
+          <img src={detalhes} alt="" className={classes.detalhes} />
+        </div>
       </CSSTransition>
     </>
   );
