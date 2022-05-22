@@ -20,6 +20,7 @@ import {
   pegarReceitaPorCategoria,
 } from "../../api";
 import { IReceita } from "../../types/receita";
+import { useMediaQuery } from "@mantine/hooks";
 
 export const Pesquisa = () => {
   const navigator = useNavigate();
@@ -30,10 +31,12 @@ export const Pesquisa = () => {
   const page = Number.parseInt(searchParam.get("page") || "1");
 
   const global = useContext(GlobalContext);
-  const { classes } = usePgPesquisaStyle();
   const [data, setData] = useState<IBuscaReceitas>({} as IBuscaReceitas);
   const [erro, setErro] = useState<any>("");
   const [buscaSemResultado, setBuscaSemResultado] = useState<string>("");
+
+  const screenMobile = useMediaQuery("(max-width: 900px)");
+  const { classes } = usePgPesquisaStyle({ mobile: screenMobile });
 
   let novaPesquisa = false;
   let pesquisaInicial = false;
