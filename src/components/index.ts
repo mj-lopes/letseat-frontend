@@ -12,6 +12,7 @@ import { RatingEstrela } from "./RatingEstrelas";
 import { SliderPreparo } from "./Slider";
 import { Subtitulo } from "./Subtitulo";
 import { Titulo } from "./Titulo";
+import { Loading } from "./Loading";
 
 export {
   Aspas,
@@ -28,4 +29,5 @@ export {
   SliderPreparo,
   Subtitulo,
   Titulo,
+  Loading,
 };

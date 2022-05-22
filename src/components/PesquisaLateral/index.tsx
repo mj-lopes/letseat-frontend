@@ -1,5 +1,5 @@
 import React, { memo, useContext, useState } from "react";
-import { Box, Radio, RadioGroup, Text } from "@mantine/core";
+import { Box, Drawer, Radio, RadioGroup, Text } from "@mantine/core";
 import {
   BadgeIngrediente,
   Botao,
@@ -11,13 +11,17 @@ import {
 
 import { GlobalContext } from "../../contextApi";
 import { useStyles } from "./style";
-import { pegarReceitaPorIngredientes, pegarReceitaPorNome } from "../../api";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "@mantine/hooks";
 
 const Pesquisa = () => {
   const [input, setInput] = useState("");
+  const [drawerEstaAberto, setDrawerEstaAberto] = useState(false);
   const global = useContext(GlobalContext);
-  const { classes } = useStyles();
+
+  const screenMobile = useMediaQuery("(max-width: 900px)");
+  const { classes } = useStyles({ mobile: screenMobile });
+
   const navigator = useNavigate();
 
   const handleSubmitPesquisa = () => {
@@ -28,9 +32,15 @@ const Pesquisa = () => {
     }
   };
 
-  return (
+  const handleToggleModal = () => {
+    setDrawerEstaAberto((prev) => !prev);
+  };
+
+  const sidenavDisplay = () => (
     <aside className={classes.aside}>
-      <Subtitulo texto="Pesquise" decoracaoLatel cor="vermelho" />
+      <Subtitulo decoracaoLatel cor="vermelho">
+        Pesquise
+      </Subtitulo>
 
       <RadioGroup
         color={"vermelho"}
@@ -81,7 +91,9 @@ const Pesquisa = () => {
         </Botao>
       </Box>
 
-      <Subtitulo texto="Filtros" decoracaoLatel cor="vermelho" my="md" />
+      <Subtitulo decoracaoLatel cor="vermelho" my="md">
+        Filtros
+      </Subtitulo>
 
       <Text weight="bold" color="azul">
         Tempo máximo
@@ -106,6 +118,24 @@ const Pesquisa = () => {
         />
       </div>
     </aside>
+  );
+
+  return screenMobile ? (
+    <div className={classes.btnDrawer}>
+      <Botao cor="vermelho" onClick={handleToggleModal}>
+        =
+      </Botao>
+      <Drawer
+        opened={drawerEstaAberto}
+        onClose={handleToggleModal}
+        className={classes.drawer}
+        size={350}
+      >
+        {sidenavDisplay()}
+      </Drawer>
+    </div>
+  ) : (
+    sidenavDisplay()
   );
 };
 

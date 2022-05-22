@@ -6,9 +6,6 @@ import { GlobalContext } from "../../../contextApi";
 import { useStyles } from "./style";
 
 export const Pesquisa = () => {
-  const [tipoPesquisa, setTipoPesquisa] = useState<"receita" | "ingredientes">(
-    "receita",
-  );
   const [pesquisa, setPesquisa] = useState("");
   const { classes } = useStyles();
   const navigator = useNavigate();
@@ -16,19 +13,13 @@ export const Pesquisa = () => {
 
   const handlerRemoveIngrediente = (el: string) => {
     const ingrediente = el.toLocaleLowerCase();
-    const newArrIngredientes =
-      global?.listaIngredientes.filter((el) => el !== ingrediente) || [];
-
-    global?.setListaIngredientes(newArrIngredientes);
+    global.removerIngrediente(ingrediente);
   };
 
   const handlerAdicionaIngrediente = () => {
     if (!global?.listaIngredientes.includes(pesquisa)) {
       const novoIngrediente = pesquisa.toLocaleLowerCase().trim();
-      global?.setListaIngredientes((prevValue) => [
-        ...prevValue,
-        novoIngrediente,
-      ]);
+      global.addIngrediente(novoIngrediente);
     }
 
     setPesquisa("");
@@ -37,10 +28,10 @@ export const Pesquisa = () => {
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
-    if (tipoPesquisa === "ingredientes") {
-      navigator("/ingredientes");
+    if (global.tipoPesquisa === "ingredientes") {
+      navigator("/pesquisa/ingredientes");
     } else {
-      navigator(`/${pesquisa}`);
+      navigator(`/pesquisa/${pesquisa}`);
     }
   };
 
@@ -48,8 +39,10 @@ export const Pesquisa = () => {
     <Box className={classes.containerPesquisa}>
       <RadioGroup
         label={<Text weight="bold">Pesquisar por:</Text>}
-        value={tipoPesquisa}
-        onChange={(e: "receita" | "ingredientes") => setTipoPesquisa(e)}
+        value={global.tipoPesquisa}
+        onChange={(e: "receita" | "ingredientes") =>
+          global.selecionarTipoPesquisa(e)
+        }
         color={"vermelho"}
         mb="md"
       >
@@ -66,7 +59,7 @@ export const Pesquisa = () => {
             value={pesquisa}
             sx={{ flex: "1" }}
           />
-          {tipoPesquisa === "ingredientes" ? (
+          {global.tipoPesquisa === "ingredientes" ? (
             <Botao
               cor={"vermelho"}
               uppercase
@@ -83,17 +76,11 @@ export const Pesquisa = () => {
         </Box>
       </form>
 
-      {tipoPesquisa === "ingredientes" ? (
-        <Box className={classes.containerBadgers} mt="lg">
-          {global?.listaIngredientes.map((el) => (
-            <BadgeIngrediente
-              onClick={() => handlerRemoveIngrediente(el)}
-              key={el}
-            >
-              {el}
-            </BadgeIngrediente>
-          ))}
-        </Box>
+      {global.tipoPesquisa === "ingredientes" ? (
+        <BadgeIngrediente
+          ingredientes={global.listaIngredientes}
+          onClick={handlerRemoveIngrediente}
+        />
       ) : (
         ""
       )}

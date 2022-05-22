@@ -1,21 +1,32 @@
 import { createStyles } from "@mantine/core";
 
-export const useStyles = createStyles((theme, params) => {
-  return {
-    aside: {
-      padding: "5rem 1rem 0 1rem",
-      width: "320px",
-      height: "100vh",
-      backgroundColor: "white",
-    },
-    estrelas: {
-      margin: "3rem auto 1rem auto",
-      textAlign: "center",
-    },
-    wrapperBotoes: {
-      display: "flex",
-      gap: ".5rem",
-      marginTop: "1rem",
-    },
-  };
-});
+export const useStyles = createStyles(
+  (theme, { mobile }: { mobile: boolean }) => {
+    return {
+      aside: {
+        padding: "0rem 1rem 0 1rem",
+        paddingTop: mobile ? "" : "4rem",
+        width: "340px",
+        backgroundColor: "white",
+      },
+      estrelas: {
+        margin: "3rem auto 1rem auto",
+        textAlign: "center",
+      },
+      wrapperBotoes: {
+        display: "flex",
+        gap: ".5rem",
+        marginTop: "1rem",
+      },
+      drawer: {
+        marginTop: "4rem",
+      },
+      btnDrawer: {
+        position: "fixed",
+        marginTop: "1rem",
+        marginLeft: "1rem",
+        zIndex: 1000000,
+      },
+    };
+  },
+);

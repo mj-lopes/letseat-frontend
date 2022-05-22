@@ -7,13 +7,11 @@ import GlobalStyle from "./theme/GlobalTheme";
 import MantineTheme from "./theme/MantineTheme";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <GlobalStorage>
-      <MantineProvider withGlobalStyles withNormalizeCSS theme={MantineTheme}>
-        <GlobalStyle />
-        <App />
-      </MantineProvider>
-    </GlobalStorage>
-  </React.StrictMode>,
+  <GlobalStorage>
+    <MantineProvider withGlobalStyles withNormalizeCSS theme={MantineTheme}>
+      <GlobalStyle />
+      <App />
+    </MantineProvider>
+  </GlobalStorage>,
   document.getElementById("root"),
 );
