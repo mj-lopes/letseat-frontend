@@ -39,4 +39,10 @@ export const useReceitaStyle = createStyles((tema) => ({
 
     color: tema.colors.azul[9],
   },
+
+  img: {
+    alignSelf: "center",
+    borderRadius: tema.radius.md,
+    cursor: "pointer",
+  },
 }));

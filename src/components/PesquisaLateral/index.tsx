@@ -1,5 +1,5 @@
 import React, { memo, useContext, useState } from "react";
-import { Box, Radio, RadioGroup, Text } from "@mantine/core";
+import { Box, Drawer, Radio, RadioGroup, Text } from "@mantine/core";
 import {
   BadgeIngrediente,
   Botao,

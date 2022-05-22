@@ -1,35 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
-
-import {
-  Box,
-  Card,
-  Divider,
-  Group,
-  Image,
-  List,
-  ListItem,
-  Text,
-} from "@mantine/core";
-import { Loading, Subtitulo, Titulo } from "../../components";
-
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Box, Card, Divider, Image, List, Modal, Text } from "@mantine/core";
 import { Link, useParams } from "react-router-dom";
-
-import { GlobalContext } from "../../contextApi";
 import { pegarReceitaPorID } from "../../api";
-
-import { IReceita } from "../../types/receita";
-
+import estrela from "../../assets/estrela.svg";
 import lista from "../../assets/lista.svg";
 import panela from "../../assets/panela.svg";
-import estrela from "../../assets/estrela.svg";
 import prato from "../../assets/prato.svg";
 import tempo from "../../assets/tempo.svg";
-
+import { Loading, Subtitulo, Titulo } from "../../components";
+import { GlobalContext } from "../../contextApi";
+import { IReceita } from "../../types/receita";
 import { useReceitaStyle } from "./style";
 
 export const Receita = () => {
   const { id } = useParams();
   const [data, setData] = useState<IReceita>({} as IReceita);
+  const [modalEstaAberto, setModalEstaAberto] = useState<boolean>(false);
+
   const global = useContext(GlobalContext);
   const { classes } = useReceitaStyle();
 
@@ -46,17 +33,39 @@ export const Receita = () => {
     }
   }, []);
 
+  function handleClickImg() {
+    setModalEstaAberto(true);
+  }
+
+  function handleClickModal() {
+    setModalEstaAberto(false);
+  }
+
   return (
     <>
+      <Modal
+        opened={modalEstaAberto}
+        onClose={handleClickModal}
+        centered
+        hideCloseButton
+        padding={0}
+        size={"70%"}
+        zIndex={100000}
+      >
+        <Image src={data?.imgUrl} height="80vh" radius="sm" />
+      </Modal>
+
       <Loading carregando={global.loading} />
+
       <Box className={classes.containerGeral}>
         <Image
           withPlaceholder
           src={data?.imgUrl}
           height="100vh"
           width="30vw"
-          sx={{ alignSelf: "center" }}
           radius="sm"
+          onClick={handleClickImg}
+          className={classes.img}
         />
 
         <Card className={classes.containerReceita}>
