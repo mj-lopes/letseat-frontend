@@ -1,11 +1,10 @@
 import { createStyles } from "@mantine/core";
 
-export const useStyles = createStyles((theme, params) => {
+export const useStyles = createStyles((theme) => {
   return {
     aside: {
-      padding: "5rem 1rem 0 1rem",
-      width: "350px",
-      height: "100vh",
+      padding: "0rem 1rem 0 1rem",
+      width: "340px",
       backgroundColor: "white",
     },
     estrelas: {
@@ -16,6 +15,15 @@ export const useStyles = createStyles((theme, params) => {
       display: "flex",
       gap: ".5rem",
       marginTop: "1rem",
+    },
+    drawer: {
+      marginTop: "4rem",
+    },
+    btnDrawer: {
+      position: "fixed",
+      marginTop: "1rem",
+      marginLeft: "1rem",
+      zIndex: 1000000,
     },
   };
 });
