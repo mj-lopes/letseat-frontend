@@ -11,6 +11,7 @@ import { Loading, Subtitulo, Titulo } from "../../components";
 import { GlobalContext } from "../../contextApi";
 import { IReceita } from "../../types/receita";
 import { useReceitaStyle } from "./style";
+import { useMediaQuery } from "@mantine/hooks";
 
 export const Receita = () => {
   const { id } = useParams();
@@ -18,7 +19,9 @@ export const Receita = () => {
   const [modalEstaAberto, setModalEstaAberto] = useState<boolean>(false);
 
   const global = useContext(GlobalContext);
-  const { classes } = useReceitaStyle();
+
+  const screenMobile = useMediaQuery("(max-width: 900px)");
+  const { classes } = useReceitaStyle({ mobile: screenMobile });
 
   useEffect(() => {
     if (id) {
@@ -49,10 +52,10 @@ export const Receita = () => {
         centered
         hideCloseButton
         padding={0}
-        size={"70%"}
+        size="90%"
         zIndex={100000}
       >
-        <Image src={data?.imgUrl} height="80vh" radius="sm" />
+        <Image src={data?.imgUrl} radius="sm" fit="contain" />
       </Modal>
 
       <Loading carregando={global.loading} />
@@ -61,8 +64,8 @@ export const Receita = () => {
         <Image
           withPlaceholder
           src={data?.imgUrl}
-          height="100vh"
-          width="30vw"
+          height={screenMobile ? "30vh" : "100vh"}
+          width={screenMobile ? "90vw" : "30vw"}
           radius="sm"
           onClick={handleClickImg}
           className={classes.img}
@@ -70,6 +73,10 @@ export const Receita = () => {
 
         <Card className={classes.containerReceita}>
           <div className={classes.conteudoReceita}>
+            <Titulo decoracaoLatel align="center" cor="vermelho">
+              {data?.titulo}
+            </Titulo>
+
             <div className={classes.cardHeader}>
               <div>
                 <Subtitulo>
@@ -117,11 +124,7 @@ export const Receita = () => {
               sx={{ margin: ".5rem 0 2rem 0" }}
             />
 
-            <Titulo decoracaoLatel align="center" cor="vermelho">
-              {data?.titulo}
-            </Titulo>
-
-            <Box sx={{ margin: "1rem 0" }}>
+            <Box sx={{ margin: ".5rem 0" }}>
               <Box sx={{ display: "flex", gap: ".725rem" }}>
                 <img src={lista} alt="" />
                 <Subtitulo>Ingredientes</Subtitulo>
@@ -131,7 +134,7 @@ export const Receita = () => {
                 {data.ingredientes?.map((ingrediente) => (
                   <List.Item
                     key={`Ingrediente - ${ingrediente}`}
-                    style={{ color: "#3B2803" }}
+                    style={{ color: "#3B2803", padding: "4px" }}
                   >
                     {ingrediente}
                   </List.Item>
@@ -139,7 +142,7 @@ export const Receita = () => {
               </List>
             </Box>
 
-            <Box sx={{ margin: "1rem 0" }}>
+            <Box sx={{ margin: ".5rem 0" }}>
               <Box sx={{ display: "flex", gap: ".725rem" }}>
                 <img src={panela} alt="" />
                 <Subtitulo>Instruções</Subtitulo>
@@ -149,7 +152,7 @@ export const Receita = () => {
                 {data.instrucoes?.map((etapa) => (
                   <List.Item
                     key={`Etapa - ${etapa}`}
-                    style={{ color: "#3B2803" }}
+                    style={{ color: "#3B2803", padding: "4px" }}
                   >
                     {etapa}
                   </List.Item>
